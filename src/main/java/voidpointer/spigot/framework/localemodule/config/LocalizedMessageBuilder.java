@@ -41,7 +41,7 @@ class LocalizedMessageBuilder implements LocalizedMessage {
         return this;
     }
 
-    @Override public LocalizedMessage set(final String placeholder, final String replacement) {
+    @Override public LocalizedMessage set(final String placeholder, String replacement) {
         final String target = PLACEHOLDER_START + placeholder + PLACEHOLDER_END;
         final StringBuilder buffer = new StringBuilder(rawMessage);
 
@@ -49,7 +49,11 @@ class LocalizedMessageBuilder implements LocalizedMessage {
         /* replace all target occurrences in buffer with replacement */
         while ((occurrenceStart = buffer.indexOf(target)) != -1) {
             occurrenceEnd = occurrenceStart + target.length();
-            buffer.replace(occurrenceStart, occurrenceEnd, replacement);
+            if (null == replacement) {
+                buffer.delete(occurrenceStart, occurrenceEnd);
+            } else {
+                buffer.replace(occurrenceStart, occurrenceEnd, replacement);
+            }
         }
         rawMessage = buffer.toString();
         return this;
