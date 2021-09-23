@@ -18,6 +18,7 @@ package voidpointer.spigot.framework.localemodule.config;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,12 +27,15 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 
-@Getter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PROTECTED)
+@Setter(AccessLevel.PROTECTED)
 public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection {
     public static final String LOCALE_FILENAME = "locale.yml";
     public static final String MESSAGES_PATH = "messages";
     private File messagesFile;
     private FileConfiguration fileConfiguration;
+
+    protected LocaleFileConfiguration() {}
 
     public LocaleFileConfiguration(@NonNull final Plugin plugin) {
         load(plugin);
@@ -53,14 +57,14 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         }
     }
 
-    private void load(final Plugin plugin) {
+    protected void load(final Plugin plugin) {
         super.setPlugin(plugin);
         messagesFile = new File(plugin.getDataFolder(), LOCALE_FILENAME);
         saveDefaultMessagesFileIfNotExists();
         loadFileConfiguration();
     }
 
-    private void saveDefaultMessagesFileIfNotExists() {
+    protected void saveDefaultMessagesFileIfNotExists() {
         if (messagesFile.exists())
             return;
         if (!messagesFile.getParentFile().exists())
@@ -68,7 +72,7 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         saveDefaultMessagesFile();
     }
 
-    private void saveDefaultMessagesFile() {
+    protected void saveDefaultMessagesFile() {
         try {
             super.getPlugin().saveResource(messagesFile.getName(), false);
         } catch (IllegalArgumentException illegalArgumentException) {
@@ -80,7 +84,7 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         }
     }
 
-    private void loadFileConfiguration() {
+    protected void loadFileConfiguration() {
         fileConfiguration = YamlConfiguration.loadConfiguration(messagesFile);
         fileConfiguration.options().copyDefaults(true).copyHeader(true);
         ConfigurationSection config = fileConfiguration.getConfigurationSection(MESSAGES_PATH);
