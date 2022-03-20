@@ -23,8 +23,4 @@ public interface Locale {
     LocalizedMessage localize(Message message);
 
     LocalizedMessage localize(String path, String defaultMessage);
-
-    LocalizedMessage localizeColorized(Message message);
-
-    LocalizedMessage localizeColorized(String path, String defaultMessage);
 }
