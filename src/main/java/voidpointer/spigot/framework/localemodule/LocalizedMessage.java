@@ -27,8 +27,6 @@ public interface LocalizedMessage {
 
     String getRawMessage();
 
-    LocalizedMessage colorize();
-
     LocalizedMessage set(String placeholder, String replacement);
 
     LocalizedMessage send(CommandSender receiver);
@@ -37,13 +35,9 @@ public interface LocalizedMessage {
 
     LocalizedMessage send(Collection<? extends CommandSender> receivers);
 
-    SpigotLocalizedMessage spigot();
+    LocalizedMessage sendActionBarMessage(Player receiver);
 
-    interface SpigotLocalizedMessage extends LocalizedMessage {
-        LocalizedMessage sendActionBarMessage(Player receiver);
+    LocalizedMessage sendActionBarMessage(Player... receivers);
 
-        LocalizedMessage sendActionBarMessage(Player... receivers);
-
-        LocalizedMessage sendActionBarMessage(Collection<? extends Player> receivers);
-    }
+    LocalizedMessage sendActionBarMessage(Collection<? extends Player> receivers);
 }

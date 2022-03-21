@@ -15,7 +15,11 @@
 
 package voidpointer.spigot.framework.localemodule.config;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import voidpointer.spigot.framework.localemodule.Locale;
@@ -30,6 +34,8 @@ abstract class AbstractLocaleConfigurationSection implements Locale {
     private Plugin plugin;
     private ConfigurationSection config;
 
+    // TODO: cache
+
     @Override public void addDefaults(final Message[] messages) {
         for (Message message : messages) {
             config.addDefault(message.getPath(), message.getDefaultMessage());
@@ -43,16 +49,6 @@ abstract class AbstractLocaleConfigurationSection implements Locale {
     @Override public LocalizedMessage localize(final String path, final String defaultMessage) {
         if (!config.isSet(path))
             plugin.getLogger().warning(String.format(Locale.MISSING_LOCALIZATION, path));
-        return LocalizedMessageBuilder.builder()
-                .rawMessage(config.getString(path, defaultMessage))
-                .build();
-    }
-
-    @Override public LocalizedMessage localizeColorized(final Message message) {
-        return localizeColorized(message.getPath(), message.getDefaultMessage());
-    }
-
-    @Override public LocalizedMessage localizeColorized(final String path, final String defaultMessage) {
-        return localize(path, defaultMessage).colorize();
+        return new SpigotLocalizedMessage(config.getString(path, defaultMessage));
     }
 }
