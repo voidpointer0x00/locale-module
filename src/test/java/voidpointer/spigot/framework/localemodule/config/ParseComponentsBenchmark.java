@@ -36,8 +36,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @BenchmarkMode(Mode.Throughput)
-@Warmup(iterations=6, time=20)
-@Measurement(iterations=6, time=20)
+@Warmup(iterations=1, time=10)
+@Measurement(iterations=3, time=5)
 @State(Scope.Benchmark)
 @Fork(1)
 public class ParseComponentsBenchmark {
