@@ -34,9 +34,9 @@ import static org.bukkit.ChatColor.translateAlternateColorCodes;
 
 class SpigotLocalizedMessage implements LocalizedMessage {
     private static final Pattern EVENTS_PATTERN = Pattern.compile(
-            "\\\\\\((?<target>.+)\\)" +
-            "(((\\[(hover)\\{(?<htext>.+)}])?" +
-            "(\\[(?<click>click\\.(?<caction>run|suggest|url|copy))\\\\%(?<ctext>.+)\\\\%]))" +
+            "\\\\\\((?<target>.+)\\)\\s?" +
+            "(((\\[(hover)\\{(?<htext>.+)}])?\\s?" +
+            "(\\[(?<click>click\\.(?<caction>run|suggest|url|copy))\\{(?<ctext>.+)}]))" +
             "|(\\[(hover)\\{(?<ohtext>.+)}]))"
     );
 
