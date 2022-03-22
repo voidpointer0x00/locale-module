@@ -34,12 +34,9 @@ abstract class AbstractLocaleConfigurationSection implements Locale {
     private Plugin plugin;
     private ConfigurationSection config;
 
-    // TODO: cache
-
     @Override public void addDefaults(final Message[] messages) {
-        for (Message message : messages) {
+        for (Message message : messages)
             config.addDefault(message.getPath(), message.getDefaultMessage());
-        }
     }
 
     @Override public LocalizedMessage localize(final Message message) {
