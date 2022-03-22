@@ -71,7 +71,7 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots verify
+      run: mvn -Dexec.skip -DskipTests --batch-mode --update-snapshots verify
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
