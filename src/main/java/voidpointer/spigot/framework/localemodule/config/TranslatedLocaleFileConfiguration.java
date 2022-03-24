@@ -28,24 +28,24 @@ public class TranslatedLocaleFileConfiguration extends LocaleFileConfiguration {
     private String language;
 
     public TranslatedLocaleFileConfiguration(final @NonNull Plugin plugin, final String language) {
+        super.setPlugin(plugin);
         this.language = language;
-        load(plugin);
+        load();
     }
 
     public void changeLanguage(final String language) {
         setLanguage(language);
-        load(super.getPlugin());
+        load();
     }
 
-    @Override protected void load(final Plugin plugin) {
+    @Override protected void load() {
         if (null == language) {
-            super.load(plugin);
+            super.load();
             return;
         }
         // basically this implementation differs only in the file that's loaded
-        super.setPlugin(plugin);
-        super.setMessagesFile(new File(plugin.getDataFolder(), getLocaleFilename()));
-        warnIfLanguageIsMissing(plugin);
+        super.setMessagesFile(new File(getPlugin().getDataFolder(), getLocaleFilename()));
+        warnIfLanguageIsMissing();
         super.saveDefaultMessagesFileIfNotExists();
         super.loadFileConfiguration();
     }
@@ -54,9 +54,9 @@ public class TranslatedLocaleFileConfiguration extends LocaleFileConfiguration {
         return (null != language) ? String.format(LOCALE_FILENAME_FORMAT, language) : LOCALE_FILENAME;
     }
 
-    protected void warnIfLanguageIsMissing(final Plugin plugin) {
-        if (null == plugin.getResource(getLocaleFilename())) {
-            plugin.getLogger().warning("Trying to load a missing translation file " + getLocaleFilename());
+    protected void warnIfLanguageIsMissing() {
+        if (null == getPlugin().getResource(getLocaleFilename())) {
+            getPlugin().getLogger().warning("Trying to load a missing translation file " + getLocaleFilename());
         }
     }
 }

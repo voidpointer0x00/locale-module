@@ -23,4 +23,6 @@ public interface Locale {
     LocalizedMessage localize(Message message);
 
     LocalizedMessage localize(String path, String defaultMessage);
+
+    // TODO: Log methods #info(), #warn() and #severe()
 }

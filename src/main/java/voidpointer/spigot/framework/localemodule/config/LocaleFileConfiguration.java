@@ -38,7 +38,8 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
     protected LocaleFileConfiguration() {}
 
     public LocaleFileConfiguration(@NonNull final Plugin plugin) {
-        load(plugin);
+        super.setPlugin(plugin);
+        load();
     }
 
     public final void reload() {
@@ -57,9 +58,8 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         }
     }
 
-    protected void load(final Plugin plugin) {
-        super.setPlugin(plugin);
-        messagesFile = new File(plugin.getDataFolder(), LOCALE_FILENAME);
+    protected void load() {
+        messagesFile = new File(super.getPlugin().getDataFolder(), LOCALE_FILENAME);
         saveDefaultMessagesFileIfNotExists();
         loadFileConfiguration();
     }
