@@ -27,7 +27,7 @@ import java.io.File;
 @NoArgsConstructor
 class LocaleFilePlugin extends JavaPlugin {
     static final String PLUGIN_YML = "locale_file_plugin.yml";
-    @PluginLocale(defaultMessages = TestMessage.class)
+    @PluginLocale(defaultMessages=TestMessage.class, searchForInjection=true)
     static LocaleFileConfiguration locale;
 
     protected LocaleFilePlugin(@NonNull final JavaPluginLoader loader, @NonNull final PluginDescriptionFile description, @NonNull final File dataFolder, @NonNull final File file) {

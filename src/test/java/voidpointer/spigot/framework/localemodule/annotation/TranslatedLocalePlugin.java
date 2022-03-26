@@ -27,7 +27,7 @@ import java.io.File;
 @NoArgsConstructor
 class TranslatedLocalePlugin extends JavaPlugin {
     static final String PLUGIN_YML = "translated_plugin.yml";
-    @PluginLocale(defaultMessages = TestMessage.class)
+    @PluginLocale(defaultMessages=TestMessage.class, searchForInjection=true)
     static TranslatedLocaleFileConfiguration locale;
 
     protected TranslatedLocalePlugin(@NonNull final JavaPluginLoader loader, @NonNull final PluginDescriptionFile description, @NonNull final File dataFolder, @NonNull final File file) {

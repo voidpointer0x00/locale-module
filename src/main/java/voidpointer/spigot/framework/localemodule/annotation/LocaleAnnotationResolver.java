@@ -15,6 +15,8 @@
 
 package voidpointer.spigot.framework.localemodule.annotation;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import lombok.val;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +27,7 @@ import voidpointer.spigot.framework.localemodule.config.LocaleConfigurationSecti
 import voidpointer.spigot.framework.localemodule.config.LocaleFileConfiguration;
 import voidpointer.spigot.framework.localemodule.config.TranslatedLocaleFileConfiguration;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -61,7 +64,28 @@ public final class LocaleAnnotationResolver {
     }
 
     private static void injectAutowiredLocale(final Locale locale, final JavaPlugin plugin) {
-        // TODO
+        Package pluginPackage = plugin.getClass().getPackage();
+        try {
+            ImmutableSet<ClassPath.ClassInfo> subClasses = ClassPath.from(plugin.getClass().getClassLoader())
+                    .getTopLevelClassesRecursive(pluginPackage.getName());
+            for (ClassPath.ClassInfo classInfo : subClasses)
+                injectInto(locale, classInfo.load());
+        } catch (IllegalAccessException illegalAccessException) {
+            plugin.getLogger().warning("Can't inject Locale, perhaps, it's a final field: " + illegalAccessException.getMessage());
+        } catch (IOException e) {
+            plugin.getLogger().warning("Unable to search through the packages to inject locale.");
+        }
+    }
+
+    private static void injectInto(final Locale locale, Class target) throws IllegalAccessException {
+        for (Field field : target.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers()))
+                continue;
+            if (!field.isAnnotationPresent(AutowiredLocale.class))
+                continue;
+            field.setAccessible(true);
+            field.set(null, locale);
+        }
     }
 
     private static LocaleFileConfiguration injectLocaleFile(final Field field, final JavaPlugin plugin) {

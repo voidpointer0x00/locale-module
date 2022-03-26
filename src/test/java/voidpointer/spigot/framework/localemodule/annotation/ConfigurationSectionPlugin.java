@@ -25,7 +25,7 @@ import java.io.File;
 
 class ConfigurationSectionPlugin extends JavaPlugin {
     static final String PLUGIN_YML = "configuration_section_plugin.yml";
-    @PluginLocale(defaultMessages = TestMessage.class)
+    @PluginLocale(defaultMessages=TestMessage.class, searchForInjection=true)
     static LocaleConfigurationSection locale;
 
     protected ConfigurationSectionPlugin(@NonNull final JavaPluginLoader loader, @NonNull final PluginDescriptionFile description, @NonNull final File dataFolder, @NonNull final File file) {
