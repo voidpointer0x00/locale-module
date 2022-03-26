@@ -50,13 +50,29 @@ dependencies {
 }
 ```
 
-### Basic API
+### Quick start
 
 ```java
-Locale locale = new LocaleConfigurationSection(this, getConfig().getConfigurationSection("messages"));
-locale.localize("greetings.hi-console", "&aLocale for &6{plugin}&e is loaded!")
-        .set("plugin", getName())
-        .send(Bukkit.getConsoleSender());
+public final class MyPlugin extends JavaPlugin {
+    @PluginLocale
+    private static LocaleFileConfiguration locale;
+
+    @Override public void onLoad() {
+        LocaleAnnotationResolver.resolve(this);
+    }
+
+    @Override public void onEnable() {
+        locale.localize("messages.plugin-enabled", "&ePlugin &b{plugin}&e enabled!")
+                .set("plugin", getName())
+                .send(Bukkit.getConsoleSender());
+    }
+
+    @Override public void onDisable() {
+        locale.localize("messages.plugin-disabled", "&ePlugin &b{plugin}&e disabled!")
+                .set("plugin", getName())
+                .send(Bukkit.getConsoleSender());
+    }
+}
 ```
 
 ## Check out [Wiki][WikiUrl]!
