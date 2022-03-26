@@ -22,6 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.File;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,16 +41,41 @@ class LocaleAnnotationResolverTest {
 
     @ParameterizedTest
     @MethodSource("mockLocaleFilePlugin")
-    void testResolve(final LocaleFilePlugin testPlugin) {
+    void testFileLocaleResolve(final LocaleFilePlugin testPlugin) {
         assertTrue(LocaleAnnotationResolver.resolve(testPlugin));
         assertNotNull(testPlugin.locale);
-        assertEquals(TestMessage.COOL.getDefaultMessage(),
-                testPlugin.locale.localize(TestMessage.COOL).getRawMessage());
-
         // TODO: ensure that locale file was created and it's valid
     }
 
     static Stream<Arguments> mockLocaleFilePlugin() {
         return Stream.of(arguments(MockBukkit.loadWith(LocaleFilePlugin.class, LocaleFilePlugin.PLUGIN_YML)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("mockTranslatedLocalePlugin")
+    void testTranslatedLocaleResolve(final TranslatedLocalePlugin plugin) {
+        assertTrue(LocaleAnnotationResolver.resolve(plugin));
+        assertNotNull(plugin.locale);
+        // TODO: ensure that locale file was created and it's valid
+    }
+
+    static Stream<Arguments> mockTranslatedLocalePlugin() {
+        return Stream.of(arguments(MockBukkit.loadWith(TranslatedLocalePlugin.class,
+                TranslatedLocalePlugin.PLUGIN_YML)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("mockConfigurationSectionPlugin")
+    void testConfigurationSectionLocaleResolve(final ConfigurationSectionPlugin plugin) {
+        assertTrue(LocaleAnnotationResolver.resolve(plugin));
+        assertNotNull(plugin.locale);
+        assertNotNull(plugin.getConfig().getString(TestMessage.COOL.getPath()));
+        assertEquals(TestMessage.COOL.getDefaultMessage(), plugin.getConfig().getString(TestMessage.COOL.getPath()));
+        assertTrue(new File(plugin.getDataFolder(), "config.yml").exists());
+    }
+
+    static Stream<Arguments> mockConfigurationSectionPlugin() {
+        return Stream.of(arguments(MockBukkit.loadWith(ConfigurationSectionPlugin.class,
+                ConfigurationSectionPlugin.PLUGIN_YML)));
     }
 }

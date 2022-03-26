@@ -1,0 +1,3 @@
+name: ConfigurationSectionPlugin
+main: voidpointer.spigot.framework.localemodule.annotation.ConfigurationSectionPlugin
+version: 1.0
