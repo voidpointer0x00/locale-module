@@ -8,6 +8,8 @@
 [![CodeQL][CodeQLBadge]][CodeQLUrl]
 [![WTFPL][LicenseBadge]](LICENSE)
 
+## [Wiki][WikiUrl]
+
 </div>
 
 Locale Module is a simple library for Spigot plugins that allows you to quickly set
@@ -56,7 +58,8 @@ locale.localize("greetings.hi-console", "&aLocale for &6{plugin}&e is loaded!")
         .set("plugin", getName())
         .send(Bukkit.getConsoleSender());
 ```
-#### More about API and other build configuration on [Wiki][WikiUrl] *(work in progress)*.
+
+## Check out [Wiki][WikiUrl]!
 
 [TextComponentAPIUrl]: https://www.spigotmc.org/wiki/the-chat-component-api/
 [JsonUpdateUrl]: https://github.com/NyanGuyMF/locale-module/releases/tag/2.0
