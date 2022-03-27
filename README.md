@@ -33,7 +33,7 @@ Make sure to check out [2.0 Rich JSON update][JsonUpdateUrl] for configuration a
   <dependency>
     <groupId>com.github.NyanGuyMF</groupId>
     <artifactId>locale-module</artifactId>
-    <version>2.0</version>
+    <version>2.1.0-SNAPSHOT</version>
   </dependency>
 </dependencies>
 ```
@@ -46,7 +46,7 @@ allprojects {
 }
 
 dependencies {
-  implementation 'com.github.NyanGuyMF:locale-module:2.0'
+  implementation 'com.github.NyanGuyMF:locale-module:2.1.0-SNAPSHOT'
 }
 ```
 
