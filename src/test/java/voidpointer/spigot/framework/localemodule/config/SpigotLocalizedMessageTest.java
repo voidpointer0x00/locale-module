@@ -27,7 +27,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -59,7 +58,7 @@ class SpigotLocalizedMessageTest {
     @ParameterizedTest
     @ValueSource(strings = {COLORFUL, HOVER_CLICK_SUGGEST})
     void testGetRawMessage(final String message) {
-        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(Logger.getGlobal(), message);
+        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(message);
         assertEquals(color(message), spigotLocalizedMessage.getRawMessage());
     }
 
@@ -70,7 +69,7 @@ class SpigotLocalizedMessageTest {
     @ParameterizedTest
     @MethodSource("testSetProvider")
     void testSet(final String message, final String expected, final String placeholder, final String replacement) {
-        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(Logger.getGlobal(), message);
+        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(message);
         assertEquals(expected, spigotLocalizedMessage.set(placeholder, replacement).getRawMessage());
     }
 
@@ -86,7 +85,7 @@ class SpigotLocalizedMessageTest {
     @ParameterizedTest
     @MethodSource("testSendProvider")
     void testSend(final String message, final String expected) {
-        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(Logger.getGlobal(), message);
+        SpigotLocalizedMessage spigotLocalizedMessage = new SpigotLocalizedMessage(message);
         spigotLocalizedMessage.send(playerMock);
 
         String nextMessage = playerMock.nextMessage();

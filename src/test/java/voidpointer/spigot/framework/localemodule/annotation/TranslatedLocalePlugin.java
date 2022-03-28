@@ -20,15 +20,15 @@ import lombok.NonNull;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import voidpointer.spigot.framework.localemodule.config.TranslatedLocaleFileConfiguration;
+import voidpointer.spigot.framework.localemodule.config.TranslatedLocaleFile;
 
 import java.io.File;
 
 @NoArgsConstructor
 class TranslatedLocalePlugin extends JavaPlugin {
     static final String PLUGIN_YML = "translated_plugin.yml";
-    @PluginLocale(defaultMessages=TestMessage.class, searchForInjection=true)
-    static TranslatedLocaleFileConfiguration locale;
+    @PluginLocale(defaultMessages=TestMessage.class)
+    static TranslatedLocaleFile locale;
 
     protected TranslatedLocalePlugin(@NonNull final JavaPluginLoader loader, @NonNull final PluginDescriptionFile description, @NonNull final File dataFolder, @NonNull final File file) {
         super(loader, description, dataFolder, file);

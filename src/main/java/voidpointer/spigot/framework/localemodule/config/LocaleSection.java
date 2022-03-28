@@ -19,8 +19,8 @@ import lombok.NonNull;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
-public class LocaleConfigurationSection extends AbstractLocaleConfigurationSection {
-    public LocaleConfigurationSection(@NonNull final Plugin plugin, @NonNull final ConfigurationSection config) {
+public class LocaleSection extends AbstractLocaleLogSection {
+    public LocaleSection(@NonNull final Plugin plugin, @NonNull final ConfigurationSection config) {
         super(plugin, config);
     }
 

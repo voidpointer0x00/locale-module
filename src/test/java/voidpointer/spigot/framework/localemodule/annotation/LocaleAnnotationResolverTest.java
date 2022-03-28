@@ -24,7 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import voidpointer.spigot.framework.localemodule.annotation.target.InjectionTarget;
-import voidpointer.spigot.framework.localemodule.config.LocaleFileConfiguration;
+import voidpointer.spigot.framework.localemodule.config.LocaleFile;
 
 import java.util.stream.Stream;
 
@@ -83,7 +83,7 @@ class LocaleAnnotationResolverTest {
         assertNotNull(plugin.locale);
         assertNotNull(injectTarget.locale);
         ConfigurationSection messagesSection =
-                plugin.getConfig().getConfigurationSection(LocaleFileConfiguration.MESSAGES_PATH);
+                plugin.getConfig().getConfigurationSection(LocaleFile.MESSAGES_PATH);
         assertNotNull(messagesSection);
         assertNotNull(messagesSection.getString(TestMessage.COOL.getPath()));
         assertEquals(TestMessage.COOL.getDefaultMessage(), messagesSection.getString(TestMessage.COOL.getPath()));

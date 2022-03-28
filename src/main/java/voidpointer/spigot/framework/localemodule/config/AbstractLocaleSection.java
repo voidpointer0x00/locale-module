@@ -32,7 +32,7 @@ import java.util.logging.Level;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor
 @AllArgsConstructor
-abstract class AbstractLocaleConfigurationSection implements Locale {
+abstract class AbstractLocaleSection implements Locale {
     private Plugin plugin;
     private ConfigurationSection config;
 
@@ -48,6 +48,6 @@ abstract class AbstractLocaleConfigurationSection implements Locale {
     @Override public LocalizedMessage localize(final String path, final String defaultMessage) {
         if (!config.isSet(path))
             plugin.getLogger().log(Level.WARNING, Locale.MISSING_LOCALIZATION, path);
-        return new SpigotLocalizedMessage(plugin.getLogger(), config.getString(path, defaultMessage));
+        return new SpigotLocalizedMessage(config.getString(path, defaultMessage));
     }
 }

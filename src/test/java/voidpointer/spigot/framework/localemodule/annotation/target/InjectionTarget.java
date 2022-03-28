@@ -15,10 +15,10 @@
 
 package voidpointer.spigot.framework.localemodule.annotation.target;
 
-import voidpointer.spigot.framework.localemodule.Locale;
+import voidpointer.spigot.framework.localemodule.LocaleLog;
 import voidpointer.spigot.framework.localemodule.annotation.AutowiredLocale;
 
 public class InjectionTarget {
     @AutowiredLocale
-    public static Locale locale;
+    public static LocaleLog locale;
 }

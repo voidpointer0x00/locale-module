@@ -23,9 +23,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import voidpointer.spigot.framework.localemodule.Locale;
 import voidpointer.spigot.framework.localemodule.Message;
-import voidpointer.spigot.framework.localemodule.config.LocaleConfigurationSection;
-import voidpointer.spigot.framework.localemodule.config.LocaleFileConfiguration;
-import voidpointer.spigot.framework.localemodule.config.TranslatedLocaleFileConfiguration;
+import voidpointer.spigot.framework.localemodule.config.LocaleFile;
+import voidpointer.spigot.framework.localemodule.config.LocaleSection;
+import voidpointer.spigot.framework.localemodule.config.TranslatedLocaleFile;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -89,9 +89,9 @@ public final class LocaleAnnotationResolver {
         }
     }
 
-    private static LocaleFileConfiguration injectLocaleFile(final Field field, final JavaPlugin plugin) {
+    private static LocaleFile injectLocaleFile(final Field field, final JavaPlugin plugin) {
         try {
-            val locale = new LocaleFileConfiguration(plugin);
+            val locale = new LocaleFile(plugin);
             addDefaults(locale, field.getAnnotation(PluginLocale.class));
             locale.save();
             field.setAccessible(true);
@@ -103,11 +103,11 @@ public final class LocaleAnnotationResolver {
         return null;
     }
 
-    private static TranslatedLocaleFileConfiguration injectTranslatableLocale(final Field field, final JavaPlugin plugin) {
+    private static TranslatedLocaleFile injectTranslatableLocale(final Field field, final JavaPlugin plugin) {
         try {
             PluginLocale pluginLocale = field.getAnnotation(PluginLocale.class);
             String language = getLanguage(pluginLocale, plugin);
-            val locale = new TranslatedLocaleFileConfiguration(plugin, language);
+            val locale = new TranslatedLocaleFile(plugin, language);
             addDefaults(locale, pluginLocale);
             locale.save();
             field.setAccessible(true);
@@ -119,11 +119,11 @@ public final class LocaleAnnotationResolver {
         return null;
     }
 
-    private static LocaleConfigurationSection injectLocaleSection(final Field field, final JavaPlugin plugin) {
+    private static LocaleSection injectLocaleSection(final Field field, final JavaPlugin plugin) {
         try {
             PluginLocale pluginLocale = field.getAnnotation(PluginLocale.class);
             ConfigurationSection messagesSection = getMessagesSection(pluginLocale, plugin);
-            val locale = new LocaleConfigurationSection(plugin, messagesSection);
+            val locale = new LocaleSection(plugin, messagesSection);
             addDefaults(locale, pluginLocale);
             field.setAccessible(true);
             field.set(plugin, locale);
@@ -178,9 +178,9 @@ public final class LocaleAnnotationResolver {
             plugin.getLogger().log(Level.WARNING, "Method invocation failed", invocationException);
         }
         FileConfiguration pluginConfig = plugin.getConfig();
-        if (pluginConfig.isSet(LocaleFileConfiguration.MESSAGES_PATH))
-            return pluginConfig.getConfigurationSection(LocaleFileConfiguration.MESSAGES_PATH);
-        return pluginConfig.createSection(LocaleFileConfiguration.MESSAGES_PATH);
+        if (pluginConfig.isSet(LocaleFile.MESSAGES_PATH))
+            return pluginConfig.getConfigurationSection(LocaleFile.MESSAGES_PATH);
+        return pluginConfig.createSection(LocaleFile.MESSAGES_PATH);
     }
 
     private static void logFailedSetting(final Logger logger, final Throwable throwable) {
@@ -188,14 +188,14 @@ public final class LocaleAnnotationResolver {
     }
 
     private static boolean isLocaleSectionType(Class<?> type) {
-        return LocaleConfigurationSection.class.isAssignableFrom(type);
+        return LocaleSection.class.isAssignableFrom(type);
     }
 
     private static boolean isLocaleFileType(final Class<?> type) {
-        return LocaleFileConfiguration.class.isAssignableFrom(type);
+        return LocaleFile.class.isAssignableFrom(type);
     }
 
     private static boolean isTranslatableLocaleType(final Class<?> type) {
-        return TranslatedLocaleFileConfiguration.class.isAssignableFrom(type);
+        return TranslatedLocaleFile.class.isAssignableFrom(type);
     }
 }

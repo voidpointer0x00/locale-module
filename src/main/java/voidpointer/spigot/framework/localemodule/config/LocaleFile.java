@@ -29,15 +29,15 @@ import java.io.IOException;
 
 @Getter(AccessLevel.PROTECTED)
 @Setter(AccessLevel.PROTECTED)
-public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection {
+public class LocaleFile extends AbstractLocaleLogSection {
     public static final String LOCALE_FILENAME = "locale.yml";
     public static final String MESSAGES_PATH = "messages";
     private File messagesFile;
     private FileConfiguration fileConfiguration;
 
-    protected LocaleFileConfiguration() {}
+    protected LocaleFile() {}
 
-    public LocaleFileConfiguration(@NonNull final Plugin plugin) {
+    public LocaleFile(@NonNull final Plugin plugin) {
         super.setPlugin(plugin);
         load();
     }
@@ -50,11 +50,7 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         try {
             fileConfiguration.save(messagesFile);
         } catch (IOException ioException) {
-            super.getPlugin().getLogger().warning(String.format(
-                    "Unable to save %s file: %s",
-                    messagesFile.getAbsolutePath(),
-                    ioException.getMessage()
-            ));
+            warn(String.format("Unable to save %s file", messagesFile.getAbsolutePath()), ioException);
         }
     }
 
@@ -76,11 +72,7 @@ public class LocaleFileConfiguration extends AbstractLocaleConfigurationSection 
         try {
             super.getPlugin().saveResource(messagesFile.getName(), false);
         } catch (IllegalArgumentException illegalArgumentException) {
-            super.getPlugin().getLogger().warning(String.format(
-                    "Unable to save default %s file: %s",
-                    messagesFile.getName(),
-                    illegalArgumentException.getMessage()
-            ));
+            warn(String.format("Unable to save default %s file", messagesFile.getAbsolutePath()), illegalArgumentException);
         }
     }
 

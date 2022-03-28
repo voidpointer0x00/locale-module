@@ -18,7 +18,6 @@ package voidpointer.spigot.framework.localemodule;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
-import java.util.logging.Level;
 
 public interface LocalizedMessage {
     char ALTERNATIVE_COLOR_CODE = '&';
@@ -40,12 +39,4 @@ public interface LocalizedMessage {
     LocalizedMessage sendActionBar(CommandSender... receivers);
 
     LocalizedMessage sendActionBar(Collection<CommandSender> receivers);
-
-    LocalizedMessage log(Level level);
-
-    LocalizedMessage log(Level level, Object object);
-
-    LocalizedMessage log(Level level, Object[] objects);
-
-    LocalizedMessage log(Level level, Throwable thrown);
 }

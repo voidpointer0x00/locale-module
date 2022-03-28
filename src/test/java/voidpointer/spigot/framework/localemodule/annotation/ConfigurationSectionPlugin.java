@@ -19,14 +19,14 @@ import lombok.NonNull;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import voidpointer.spigot.framework.localemodule.config.LocaleConfigurationSection;
+import voidpointer.spigot.framework.localemodule.config.LocaleSection;
 
 import java.io.File;
 
 class ConfigurationSectionPlugin extends JavaPlugin {
     static final String PLUGIN_YML = "configuration_section_plugin.yml";
-    @PluginLocale(defaultMessages=TestMessage.class, searchForInjection=true)
-    static LocaleConfigurationSection locale;
+    @PluginLocale(defaultMessages=TestMessage.class)
+    static LocaleSection locale;
 
     protected ConfigurationSectionPlugin(@NonNull final JavaPluginLoader loader, @NonNull final PluginDescriptionFile description, @NonNull final File dataFolder, @NonNull final File file) {
         super(loader, description, dataFolder, file);

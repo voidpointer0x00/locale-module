@@ -23,11 +23,11 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 
 @Setter(AccessLevel.PROTECTED)
-public class TranslatedLocaleFileConfiguration extends LocaleFileConfiguration {
+public class TranslatedLocaleFile extends LocaleFile {
     public static final String LOCALE_FILENAME_FORMAT = "locale-%s.yml";
     private String language;
 
-    public TranslatedLocaleFileConfiguration(final @NonNull Plugin plugin, final String language) {
+    public TranslatedLocaleFile(final @NonNull Plugin plugin, final String language) {
         super.setPlugin(plugin);
         this.language = language;
         load();
