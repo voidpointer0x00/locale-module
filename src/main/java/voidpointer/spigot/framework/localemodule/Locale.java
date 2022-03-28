@@ -16,7 +16,7 @@
 package voidpointer.spigot.framework.localemodule;
 
 public interface Locale {
-    String MISSING_LOCALIZATION = "Missing localization for «%s» message, using default instead";
+    String MISSING_LOCALIZATION = "Missing localization for «{0}» message, using default instead";
 
     void addDefaults(Message[] messages);
 

@@ -26,6 +26,8 @@ import voidpointer.spigot.framework.localemodule.Locale;
 import voidpointer.spigot.framework.localemodule.LocalizedMessage;
 import voidpointer.spigot.framework.localemodule.Message;
 
+import java.util.logging.Level;
+
 @Getter(AccessLevel.PROTECTED)
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor
@@ -45,7 +47,7 @@ abstract class AbstractLocaleConfigurationSection implements Locale {
 
     @Override public LocalizedMessage localize(final String path, final String defaultMessage) {
         if (!config.isSet(path))
-            plugin.getLogger().warning(String.format(Locale.MISSING_LOCALIZATION, path));
-        return new SpigotLocalizedMessage(config.getString(path, defaultMessage));
+            plugin.getLogger().log(Level.WARNING, Locale.MISSING_LOCALIZATION, path);
+        return new SpigotLocalizedMessage(plugin.getLogger(), config.getString(path, defaultMessage));
     }
 }

@@ -27,6 +27,8 @@ import voidpointer.spigot.framework.localemodule.LocalizedMessage;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,10 +42,12 @@ class SpigotLocalizedMessage implements LocalizedMessage {
             "|(\\[(hover)\\{(?<ohtext>.+)}]))"
     );
 
+    @NonNull private Logger logger;
     @NonNull private String rawMessage;
     private TextComponent[] cachedComponents;
 
-    public SpigotLocalizedMessage(@NonNull final String rawMessage) {
+    public SpigotLocalizedMessage(@NonNull final Logger logger, @NonNull final String rawMessage) {
+        this.logger = logger;
         this.rawMessage = translateAlternateColorCodes(LocalizedMessage.ALTERNATIVE_COLOR_CODE, rawMessage);
     }
 
@@ -103,6 +107,26 @@ class SpigotLocalizedMessage implements LocalizedMessage {
     @Override public LocalizedMessage sendActionBar(final Collection<CommandSender> receivers) {
         for (CommandSender receiver: receivers)
             sendActionBar(receiver);
+        return this;
+    }
+
+    @Override public LocalizedMessage log(final Level level) {
+        logger.log(level, rawMessage);
+        return this;
+    }
+
+    @Override public LocalizedMessage log(final Level level, Object object) {
+        logger.log(level, rawMessage, object);
+        return this;
+    }
+
+    @Override public LocalizedMessage log(final Level level, final Object[] objects) {
+        logger.log(level, rawMessage, objects);
+        return this;
+    }
+
+    @Override public LocalizedMessage log(final Level level, final Throwable thrown) {
+        logger.log(level, rawMessage, thrown);
         return this;
     }
 
