@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PluginLocale {
-    boolean searchForInjection() default false;
+    boolean searchForInjection() default true;
     String messagesSectionMethodName() default "getMessagesSection";
     String languageMethodName() default "getLanguage";
     /** Used if {@link #languageMethodName()} invocation failed. */
