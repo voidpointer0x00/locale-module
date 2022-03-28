@@ -87,22 +87,22 @@ class SpigotLocalizedMessage implements LocalizedMessage {
         return this;
     }
 
-    @Override public LocalizedMessage send(final ChatMessageType type, final CommandSender receiver) {
+    @Override public LocalizedMessage sendActionBar(final CommandSender receiver) {
         if (!(receiver instanceof Player))
             throw new IllegalArgumentException("The 'receiver' object is not an instance of the 'Player' class");
-        ((Player) receiver).spigot().sendMessage(type, parseComponents(rawMessage));
+        ((Player) receiver).spigot().sendMessage(ChatMessageType.ACTION_BAR, parseComponents(rawMessage));
         return this;
     }
 
-    @Override public LocalizedMessage send(final ChatMessageType type, final CommandSender... receivers) {
+    @Override public LocalizedMessage sendActionBar(final CommandSender... receivers) {
         for (CommandSender receiver : receivers)
-            send(type, receiver);
+            sendActionBar(receiver);
         return this;
     }
 
-    @Override public LocalizedMessage send(final ChatMessageType type, final Collection<CommandSender> receivers) {
+    @Override public LocalizedMessage sendActionBar(final Collection<CommandSender> receivers) {
         for (CommandSender receiver: receivers)
-            send(type, receiver);
+            sendActionBar(receiver);
         return this;
     }
 

@@ -15,7 +15,6 @@
 
 package voidpointer.spigot.framework.localemodule;
 
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
@@ -35,9 +34,9 @@ public interface LocalizedMessage {
 
     LocalizedMessage send(Collection<? extends CommandSender> receivers);
 
-    LocalizedMessage send(ChatMessageType type, CommandSender receivers);
+    LocalizedMessage sendActionBar(CommandSender receivers);
 
-    LocalizedMessage send(ChatMessageType type, CommandSender... receivers);
+    LocalizedMessage sendActionBar(CommandSender... receivers);
 
-    LocalizedMessage send(ChatMessageType type, Collection<CommandSender> receivers);
+    LocalizedMessage sendActionBar(Collection<CommandSender> receivers);
 }
