@@ -46,10 +46,10 @@ public final class LocaleAnnotationResolver {
 
             if (isLocaleSectionType(field.getType()))
                 locale = injectLocaleSection(field, plugin);
-            else if (isLocaleFileType(field.getType()))
-                locale = injectLocaleFile(field, plugin);
             else if (isTranslatableLocaleType(field.getType()))
                 locale = injectTranslatableLocale(field, plugin);
+            else if (isLocaleFileType(field.getType()))
+                locale = injectLocaleFile(field, plugin);
             else
                 continue;
             if ((locale != null) & field.getAnnotation(PluginLocale.class).searchForInjection())
@@ -63,13 +63,14 @@ public final class LocaleAnnotationResolver {
         return true;
     }
 
+    @SuppressWarnings("UnstableApiUsage") /* This Guava API is marked as @Beta for more than 8 years */
     private static void injectAutowiredLocale(final Locale locale, final JavaPlugin plugin) {
         Package pluginPackage = plugin.getClass().getPackage();
         try {
             ImmutableSet<ClassPath.ClassInfo> subClasses = ClassPath.from(plugin.getClass().getClassLoader())
                     .getTopLevelClassesRecursive(pluginPackage.getName());
             for (ClassPath.ClassInfo classInfo : subClasses)
-                injectInto(locale, classInfo.load());
+                injectAutowired(locale, classInfo.load());
         } catch (IllegalAccessException illegalAccessException) {
             plugin.getLogger().warning("Can't inject Locale, perhaps, it's a final field: " + illegalAccessException.getMessage());
         } catch (IOException e) {
@@ -77,7 +78,7 @@ public final class LocaleAnnotationResolver {
         }
     }
 
-    private static void injectInto(final Locale locale, Class target) throws IllegalAccessException {
+    private static void injectAutowired(final Locale locale, Class<?> target) throws IllegalAccessException {
         for (Field field : target.getDeclaredFields()) {
             if (!Modifier.isStatic(field.getModifiers()))
                 continue;
@@ -187,14 +188,14 @@ public final class LocaleAnnotationResolver {
     }
 
     private static boolean isLocaleSectionType(Class<?> type) {
-        return type.equals(LocaleConfigurationSection.class);
+        return LocaleConfigurationSection.class.isAssignableFrom(type);
     }
 
     private static boolean isLocaleFileType(final Class<?> type) {
-        return type.equals(LocaleFileConfiguration.class);
+        return LocaleFileConfiguration.class.isAssignableFrom(type);
     }
 
     private static boolean isTranslatableLocaleType(final Class<?> type) {
-        return type.equals((TranslatedLocaleFileConfiguration.class));
+        return TranslatedLocaleFileConfiguration.class.isAssignableFrom(type);
     }
 }
