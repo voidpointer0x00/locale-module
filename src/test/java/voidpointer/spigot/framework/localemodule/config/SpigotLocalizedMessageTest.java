@@ -1,16 +1,16 @@
 /*
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  *
- * Copyright (C) 2020 Vasiliy Petukhov <void.pointer@ya.ru>
+ *  Copyright (C) 2022 Vasiliy Petukhov <void.pointer@ya.ru>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this license document, and changing it is allowed as long
- * as the name is changed.
+ *  Everyone is permitted to copy and distribute verbatim or modified
+ *  copies of this license document, and changing it is allowed as long
+ *  as the name is changed.
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
  *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *   0. You just DO WHAT THE FUCK YOU WANT TO.
  */
 
 package voidpointer.spigot.framework.localemodule.config;
@@ -21,7 +21,6 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.bukkit.ChatColor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,16 +28,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class SpigotLocalizedMessageTest {
     static final String COLORFUL = "&cColorful message";
-    static final String HOVER_CLICK_SUGGEST = "&eHere's \\(&csome)[hover{&6&lComplex message!}][click.suggest\\%kick " +
-            "{player}\\%]";
+    static final String HOVER_CLICK_SUGGEST = "&eHere's \\(&csome)[hover{&6&lComplex message!}][click.suggest{kick " +
+            "{player}}] &8<- hover :>";
     // there's no way to check if TextComponent events are being sent correctly yet
-    static final String HOVER_CLICK_SUGGEST_VISIBLE = "§f§eHere's §f§csome";
+    static final String HOVER_CLICK_SUGGEST_VISIBLE = "§f§eHere's §f§csome§f §8<- hover :>";
     static final String PLAYER_NAME = "_voidpointer";
 
     static ServerMock serverMock;
@@ -101,10 +99,5 @@ class SpigotLocalizedMessageTest {
                 arguments(COLORFUL, "§f"+color(COLORFUL)),
                 arguments(HOVER_CLICK_SUGGEST, HOVER_CLICK_SUGGEST_VISIBLE)
         );
-    }
-
-    @ParameterizedTest
-    @Disabled // No way to check action bar messages yet
-    void testSendActionBarMessage() {
     }
 }
