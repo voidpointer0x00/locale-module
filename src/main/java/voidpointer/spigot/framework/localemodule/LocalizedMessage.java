@@ -1,16 +1,16 @@
 /*
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  *
- * Copyright (C) 2020 Vasiliy Petukhov <void.pointer@ya.ru>
+ *  Copyright (C) 2022 Vasiliy Petukhov <void.pointer@ya.ru>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this license document, and changing it is allowed as long
- * as the name is changed.
+ *  Everyone is permitted to copy and distribute verbatim or modified
+ *  copies of this license document, and changing it is allowed as long
+ *  as the name is changed.
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
  *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *   0. You just DO WHAT THE FUCK YOU WANT TO.
  */
 
 package voidpointer.spigot.framework.localemodule;
@@ -26,7 +26,9 @@ public interface LocalizedMessage {
 
     String getRawMessage();
 
-    LocalizedMessage set(String placeholder, String replacement);
+    LocalizedMessage set(String placeholder, LocalizedMessage replacement);
+
+    LocalizedMessage set(String placeholder, Object replacement);
 
     LocalizedMessage send(CommandSender receiver);
 

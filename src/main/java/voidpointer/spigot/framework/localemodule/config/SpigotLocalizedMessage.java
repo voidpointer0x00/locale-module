@@ -51,7 +51,11 @@ class SpigotLocalizedMessage implements LocalizedMessage {
         return rawMessage;
     }
 
-    @Override public LocalizedMessage set(final String placeholder, final String replacement) {
+    @Override public LocalizedMessage set(final String placeholder, final LocalizedMessage replacement) {
+        return set(placeholder, replacement.getRawMessage());
+    }
+
+    @Override public LocalizedMessage set(final String placeholder, final Object replacement) {
         cachedComponents = null;
         final String target = PLACEHOLDER_START + placeholder + PLACEHOLDER_END;
         final StringBuilder buffer = new StringBuilder(rawMessage);
@@ -60,11 +64,10 @@ class SpigotLocalizedMessage implements LocalizedMessage {
         /* replace all target occurrences in buffer with replacement */
         while ((occurrenceStart = buffer.indexOf(target)) != -1) {
             occurrenceEnd = occurrenceStart + target.length();
-            if (null == replacement) {
+            if (null == replacement)
                 buffer.delete(occurrenceStart, occurrenceEnd);
-            } else {
-                buffer.replace(occurrenceStart, occurrenceEnd, replacement);
-            }
+            else
+                buffer.replace(occurrenceStart, occurrenceEnd, replacement.toString());
         }
         rawMessage = buffer.toString();
         return this;

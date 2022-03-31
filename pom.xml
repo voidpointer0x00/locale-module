@@ -21,7 +21,7 @@
 
     <groupId>voidpointer.spigot.framework</groupId>
     <artifactId>locale-module</artifactId>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
     <packaging>jar</packaging>
 
     <name>Locale Module</name>
