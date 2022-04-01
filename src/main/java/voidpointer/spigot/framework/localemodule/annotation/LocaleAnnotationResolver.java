@@ -1,22 +1,23 @@
 /*
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  *
- * Copyright (C) 2022 Vasiliy Petukhov <void.pointer@ya.ru>
+ *  Copyright (C) 2022 Vasiliy Petukhov <void.pointer@ya.ru>
  *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this license document, and changing it is allowed as long
- * as the name is changed.
+ *  Everyone is permitted to copy and distribute verbatim or modified
+ *  copies of this license document, and changing it is allowed as long
+ *  as the name is changed.
  *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
  *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *   0. You just DO WHAT THE FUCK YOU WANT TO.
  */
 
 package voidpointer.spigot.framework.localemodule.annotation;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
+import com.google.common.reflect.ClassPath.ClassInfo;
 import lombok.val;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -63,14 +64,14 @@ public final class LocaleAnnotationResolver {
         return true;
     }
 
-    @SuppressWarnings("UnstableApiUsage") /* This Guava API is marked as @Beta for more than 8 years */
+    /* This Guava API is marked as @Beta for more than 8 years */
     private static void injectAutowiredLocale(final Locale locale, final JavaPlugin plugin) {
         Package pluginPackage = plugin.getClass().getPackage();
         try {
-            ImmutableSet<ClassPath.ClassInfo> subClasses = ClassPath.from(plugin.getClass().getClassLoader())
+            ImmutableSet<ClassInfo> subClasses = ClassPath.from(plugin.getClass().getClassLoader())
                     .getTopLevelClassesRecursive(pluginPackage.getName());
-            for (ClassPath.ClassInfo classInfo : subClasses)
-                injectAutowired(locale, classInfo.load());
+            for (ClassInfo classInfo : subClasses)
+                injectAutowired(locale, classInfo);
         } catch (IllegalAccessException illegalAccessException) {
             plugin.getLogger().warning("Can't inject Locale, perhaps, it's a final field: " + illegalAccessException.getMessage());
         } catch (IOException e) {
@@ -78,7 +79,16 @@ public final class LocaleAnnotationResolver {
         }
     }
 
-    private static void injectAutowired(final Locale locale, Class<?> target) throws IllegalAccessException {
+    private static void injectAutowired(final Locale locale, final ClassInfo info) throws IllegalAccessException {
+        try {
+            injectAutowired0(locale, info);
+        } catch (NoClassDefFoundError ignoreNms) {}
+    }
+
+    private static void injectAutowired0(final Locale locale, final ClassInfo info) throws IllegalAccessException {
+        Class<?> target = info.load();
+        if (target == null)
+            return;
         for (Field field : target.getDeclaredFields()) {
             if (!Modifier.isStatic(field.getModifiers()))
                 continue;
