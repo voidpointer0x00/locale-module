@@ -16,6 +16,7 @@
 package voidpointer.spigot.framework.localemodule.annotation;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
+import lombok.val;
 import org.bukkit.configuration.ConfigurationSection;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -26,12 +27,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import voidpointer.spigot.framework.localemodule.annotation.target.InjectionTarget;
 import voidpointer.spigot.framework.localemodule.config.LocaleFile;
 
+import java.io.File;
+import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static java.util.Objects.requireNonNull;
+import static org.bukkit.configuration.file.YamlConfiguration.loadConfiguration;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static voidpointer.spigot.framework.localemodule.annotation.TestMessage.COOL;
+import static voidpointer.spigot.framework.localemodule.annotation.TranslatedLocalePlugin.LOCALE_YML;
+import static voidpointer.spigot.framework.localemodule.config.LocaleFile.LOCALE_FILENAME;
 
 class LocaleAnnotationResolverTest {
     @BeforeAll static void setUp() {
@@ -49,11 +55,27 @@ class LocaleAnnotationResolverTest {
     @ParameterizedTest
     @MethodSource("mockLocaleFilePlugin")
     void testFileLocaleResolve(final LocaleFilePlugin plugin) {
-        InjectionTarget injectTarget = new InjectionTarget();
+        File pluginDescriptionFile = new File(plugin.getDataFolder(), LOCALE_FILENAME);
+        assertFalse(pluginDescriptionFile.exists());
         assertTrue(LocaleAnnotationResolver.resolve(plugin));
-        assertNotNull(plugin.locale);
-        assertNotNull(injectTarget.locale);
-        // TODO: ensure that locale file was created and it's valid
+        assertNotNull(LocaleFilePlugin.locale);
+        assertNotNull(InjectionTarget.locale);
+        assertTrue(pluginDescriptionFile.exists());
+        val localeReader = new InputStreamReader(requireNonNull(plugin.getResource(LOCALE_FILENAME)));
+        val expect = loadConfiguration(localeReader);
+        assertTrue(isValidLocale(expect, loadConfiguration(pluginDescriptionFile)));
+    }
+
+    private boolean isValidLocale(ConfigurationSection expect, ConfigurationSection actual) {
+        expect = expect.getConfigurationSection("messages");
+        actual = actual.getConfigurationSection("messages");
+        if ((expect == null) || (actual == null))
+            return false;
+        for (String key : expect.getKeys(false)) {
+            if (!requireNonNull(expect.get(key)).equals(actual.get(key)))
+                return false;
+        }
+        return requireNonNull(actual.getString(COOL.getPath())).equals(COOL.getDefaultMessage());
     }
 
     static Stream<Arguments> mockLocaleFilePlugin() {
@@ -63,11 +85,15 @@ class LocaleAnnotationResolverTest {
     @ParameterizedTest
     @MethodSource("mockTranslatedLocalePlugin")
     void testTranslatedLocaleResolve(final TranslatedLocalePlugin plugin) {
-        InjectionTarget injectTarget = new InjectionTarget();
+        File pluginDescriptionFile = new File(plugin.getDataFolder(), LOCALE_YML);
+        assertFalse(pluginDescriptionFile.exists());
         assertTrue(LocaleAnnotationResolver.resolve(plugin));
-        assertNotNull(plugin.locale);
-        assertNotNull(injectTarget.locale);
-        // TODO: ensure that locale file was created and it's valid
+        assertNotNull(TranslatedLocalePlugin.locale);
+        assertNotNull(InjectionTarget.locale);
+        assertTrue(pluginDescriptionFile.exists());
+        val localeReader = new InputStreamReader(requireNonNull(plugin.getResource(LOCALE_YML)));
+        val expect = loadConfiguration(localeReader);
+        assertTrue(isValidLocale(expect, loadConfiguration(pluginDescriptionFile)));
     }
 
     static Stream<Arguments> mockTranslatedLocalePlugin() {
@@ -78,15 +104,14 @@ class LocaleAnnotationResolverTest {
     @ParameterizedTest
     @MethodSource("mockConfigurationSectionPlugin")
     void testConfigurationSectionLocaleResolve(final ConfigurationSectionPlugin plugin) {
-        InjectionTarget injectTarget = new InjectionTarget();
         assertTrue(LocaleAnnotationResolver.resolve(plugin));
-        assertNotNull(plugin.locale);
-        assertNotNull(injectTarget.locale);
+        assertNotNull(ConfigurationSectionPlugin.locale);
+        assertNotNull(InjectionTarget.locale);
         ConfigurationSection messagesSection =
                 plugin.getConfig().getConfigurationSection(LocaleFile.MESSAGES_PATH);
         assertNotNull(messagesSection);
-        assertNotNull(messagesSection.getString(TestMessage.COOL.getPath()));
-        assertEquals(TestMessage.COOL.getDefaultMessage(), messagesSection.getString(TestMessage.COOL.getPath()));
+        assertNotNull(messagesSection.getString(COOL.getPath()));
+        assertEquals(COOL.getDefaultMessage(), messagesSection.getString(COOL.getPath()));
     }
 
     static Stream<Arguments> mockConfigurationSectionPlugin() {
