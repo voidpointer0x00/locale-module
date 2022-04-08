@@ -25,11 +25,17 @@ import java.io.File;
 @Setter(AccessLevel.PROTECTED)
 public class TranslatedLocaleFile extends LocaleFile {
     public static final String LOCALE_FILENAME_FORMAT = "locale-%s.yml";
+    private final String filenameFormat;
     private String language;
 
     public TranslatedLocaleFile(final @NonNull Plugin plugin, final String language) {
+        this(plugin, language, LOCALE_FILENAME_FORMAT);
+    }
+
+    public TranslatedLocaleFile(final @NonNull Plugin plugin, final String language, final String filenameFormat) {
         super.setPlugin(plugin);
         this.language = language;
+        this.filenameFormat = filenameFormat;
         load();
     }
 
@@ -51,7 +57,7 @@ public class TranslatedLocaleFile extends LocaleFile {
     }
 
     protected String getLocaleFilename() {
-        return (null != language) ? String.format(LOCALE_FILENAME_FORMAT, language) : LOCALE_FILENAME;
+        return String.format(filenameFormat, language != null ? language : "");
     }
 
     protected void warnIfLanguageIsMissing() {
