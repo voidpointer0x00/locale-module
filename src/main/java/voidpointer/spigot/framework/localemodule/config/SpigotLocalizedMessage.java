@@ -52,7 +52,7 @@ class SpigotLocalizedMessage implements LocalizedMessage {
     }
 
     @Override public LocalizedMessage set(final String placeholder, final LocalizedMessage replacement) {
-        return set(placeholder, replacement.getRawMessage());
+        return set(placeholder, (replacement != null) ? replacement.getRawMessage() : null);
     }
 
     @Override public LocalizedMessage set(final String placeholder, final Object replacement) {
