@@ -36,6 +36,11 @@ abstract class AbstractLocaleSection implements Locale {
     private Plugin plugin;
     private ConfigurationSection config;
 
+    @Override public void addDefaults(final Iterable<Message> messages) {
+        for (final Message message : messages)
+            config.addDefault(message.getPath(), message.getDefaultMessage());
+    }
+
     @Override public void addDefaults(final Message[] messages) {
         for (Message message : messages)
             config.addDefault(message.getPath(), message.getDefaultMessage());

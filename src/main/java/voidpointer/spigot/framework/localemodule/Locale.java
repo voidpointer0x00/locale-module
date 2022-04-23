@@ -18,6 +18,8 @@ package voidpointer.spigot.framework.localemodule;
 public interface Locale {
     String MISSING_LOCALIZATION = "Missing localization for «{0}» message, using default instead";
 
+    void addDefaults(Iterable<Message> messages);
+
     void addDefaults(Message[] messages);
 
     LocalizedMessage localize(Message message);
