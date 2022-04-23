@@ -16,6 +16,7 @@
 package voidpointer.spigot.framework.localemodule.config;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.plugin.Plugin;
@@ -26,7 +27,7 @@ import java.io.File;
 public class TranslatedLocaleFile extends LocaleFile {
     public static final String LOCALE_FILENAME_FORMAT = "locale-%s.yml";
     private final String filenameFormat;
-    private String language;
+    @Getter private String language;
 
     public TranslatedLocaleFile(final @NonNull Plugin plugin, final String language) {
         this(plugin, language, LOCALE_FILENAME_FORMAT);
