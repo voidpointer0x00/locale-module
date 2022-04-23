@@ -26,6 +26,8 @@ import voidpointer.spigot.framework.localemodule.Locale;
 import voidpointer.spigot.framework.localemodule.LocalizedMessage;
 import voidpointer.spigot.framework.localemodule.Message;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.logging.Level;
 
 @Getter(AccessLevel.PROTECTED)
@@ -33,17 +35,22 @@ import java.util.logging.Level;
 @NoArgsConstructor
 @AllArgsConstructor
 abstract class AbstractLocaleSection implements Locale {
+    private final Collection<Message> defaults = new LinkedHashSet<>();
     private Plugin plugin;
     private ConfigurationSection config;
 
     @Override public void addDefaults(final Iterable<Message> messages) {
-        for (final Message message : messages)
+        for (final Message message : messages) {
             config.addDefault(message.getPath(), message.getDefaultMessage());
+            defaults.add(message);
+        }
     }
 
     @Override public void addDefaults(final Message[] messages) {
-        for (Message message : messages)
+        for (final Message message : messages) {
             config.addDefault(message.getPath(), message.getDefaultMessage());
+            defaults.add(message);
+        }
     }
 
     @Override public LocalizedMessage localize(final Message message) {

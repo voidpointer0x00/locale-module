@@ -44,6 +44,7 @@ public class LocaleFile extends AbstractLocaleLogSection {
 
     public final void reload() {
         loadFileConfiguration();
+        addDefaults(getDefaults());
     }
 
     public final void save() {

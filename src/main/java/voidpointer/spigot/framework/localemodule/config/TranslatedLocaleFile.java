@@ -43,6 +43,7 @@ public class TranslatedLocaleFile extends LocaleFile {
     public void changeLanguage(final String language) {
         setLanguage(language);
         load();
+        addDefaults(getDefaults());
     }
 
     @Override protected void load() {
