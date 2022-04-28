@@ -80,7 +80,7 @@ public class LocaleFile extends AbstractLocaleLogSection {
 
     protected void loadFileConfiguration() {
         fileConfiguration = YamlConfiguration.loadConfiguration(messagesFile);
-        fileConfiguration.options().copyDefaults(true).parseComments(true);
+        fileConfiguration.options().copyDefaults(true);
         ConfigurationSection config = fileConfiguration.getConfigurationSection(MESSAGES_PATH);
         if (config != null) {
             super.setConfig(fileConfiguration.getConfigurationSection(MESSAGES_PATH));
