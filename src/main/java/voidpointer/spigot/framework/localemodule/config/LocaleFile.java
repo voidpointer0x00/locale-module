@@ -43,6 +43,7 @@ public class LocaleFile extends AbstractLocaleLogSection {
     }
 
     public final void reload() {
+        saveDefaultMessagesFileIfNotExists();
         loadFileConfiguration();
         addDefaults(getDefaults());
     }
