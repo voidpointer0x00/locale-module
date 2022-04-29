@@ -85,7 +85,7 @@ class SpigotLocalizedMessage implements LocalizedMessage {
     @Override public LocalizedMessage send(final CommandSender receiver) {
         if (supportComponents == null) {
             final Matcher matcher = VERSION_PATTERN.matcher(getBukkitVersion());
-            supportComponents = matcher.matches() && (parseInt(matcher.group("major")) >= 9);
+            supportComponents = matcher.find() && (parseInt(matcher.group("major")) >= 9);
         }
         if (supportComponents && (receiver instanceof Player))
             ((Player) receiver).spigot().sendMessage(parseComponents(rawMessage));
@@ -194,7 +194,7 @@ class SpigotLocalizedMessage implements LocalizedMessage {
                 return OPEN_URL;
             case "copy":
                 final Matcher matcher = VERSION_PATTERN.matcher(getBukkitVersion());
-                if (!matcher.matches() || (parseInt(matcher.group("major")) < 15))
+                if (!matcher.find() || (parseInt(matcher.group("major")) < 15))
                     return null; /* COPY_TO_CLIPBOARD is available since MC 1.15 */
                 return COPY_TO_CLIPBOARD;
             default:
