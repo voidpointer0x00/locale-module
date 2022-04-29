@@ -18,11 +18,12 @@ package voidpointer.spigot.framework.localemodule.config;
 import lombok.NonNull;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import voidpointer.spigot.framework.localemodule.LocalizedMessage;
 
 import java.util.Collection;
@@ -30,9 +31,16 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Integer.parseInt;
+import static net.md_5.bungee.api.chat.ClickEvent.Action.COPY_TO_CLIPBOARD;
+import static net.md_5.bungee.api.chat.ClickEvent.Action.OPEN_URL;
+import static net.md_5.bungee.api.chat.ClickEvent.Action.RUN_COMMAND;
+import static net.md_5.bungee.api.chat.ClickEvent.Action.SUGGEST_COMMAND;
+import static org.bukkit.Bukkit.getBukkitVersion;
 import static org.bukkit.ChatColor.translateAlternateColorCodes;
 
 class SpigotLocalizedMessage implements LocalizedMessage {
+    private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.(?<major>\\d+)\\.(?<minor>\\d+)");
     private static final Pattern EVENTS_PATTERN = Pattern.compile(
             "\\\\\\((?<target>.+)\\)\\s?" +
             "(((\\[(hover)\\{(?<htext>.+)}])?\\s?" +
@@ -146,22 +154,25 @@ class SpigotLocalizedMessage implements LocalizedMessage {
     }
 
     private ClickEvent getClickEvent(final Matcher matcher) {
-        final String actionName = matcher.group("caction");
-        if (actionName == null)
+        final Action action;
+        if ((matcher.group("caction") == null) || ((action = getAction(matcher.group("caction"))) == null))
             return null;
-        return new ClickEvent(getAction(actionName), matcher.group("ctext"));
+        return new ClickEvent(action, matcher.group("ctext"));
     }
 
-    private ClickEvent.Action getAction(final String action) {
+    private @Nullable Action getAction(final String action) {
         switch (action) {
             case "run":
-                return ClickEvent.Action.RUN_COMMAND;
+                return RUN_COMMAND;
             case "suggest":
-                return ClickEvent.Action.SUGGEST_COMMAND;
+                return SUGGEST_COMMAND;
             case "url":
-                return ClickEvent.Action.OPEN_URL;
+                return OPEN_URL;
             case "copy":
-                return ClickEvent.Action.COPY_TO_CLIPBOARD;
+                final Matcher matcher = VERSION_PATTERN.matcher(getBukkitVersion());
+                if (!matcher.matches() || (parseInt(matcher.group("major")) < 15))
+                    return null; /* COPY_TO_CLIPBOARD is available since MC 1.15 */
+                return COPY_TO_CLIPBOARD;
             default:
                 throw new RuntimeException("Unknown click action: " + action);
         }
