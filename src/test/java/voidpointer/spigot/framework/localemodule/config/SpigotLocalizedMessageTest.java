@@ -79,6 +79,32 @@ class SpigotLocalizedMessageTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("supplyTestRemoveComponents")
+    void testRemoveComponents(final String message, final String expect) {
+        SpigotLocalizedMessage msg = new SpigotLocalizedMessage(message);
+        assertEquals(expect, msg.removeComponents(msg.getRawMessage()));
+    }
+
+    public static Stream<Arguments> supplyTestRemoveComponents() {
+        return Stream.of(
+                arguments("just text", "just text"),
+                arguments("&1colorful &2text", "§1colorful §2text"),
+                arguments("\\(&0colorful &4inner) [hover{hover}] [click.run{/nothing}]", "§0colorful §4inner"),
+                arguments("\\(inner) [hover{hover}] [click.run{/nothing}]", "inner"),
+                arguments("start \\(inner) [hover{hover}] [click.run{/nothing}]", "start inner"),
+                arguments("\\(inner) [hover{hover}] [click.run{/nothing}] end", "inner end"),
+                arguments("start \\(inner) [hover{hover}] [click.run{/nothing}] end", "start inner end"),
+                arguments("\\(inner) [hover{hover}]", "inner"),
+                arguments("start \\(inner) [hover{hover}]", "start inner"),
+                arguments("\\(inner) [hover{hover}] end", "inner end"),
+                arguments("start \\(inner) [hover{hover}] end", "start inner end"),
+                arguments("\\(inner) [click.run{/nothing}]", "inner"),
+                arguments("start \\(inner) [click.run{/nothing}]", "start inner"),
+                arguments("\\(inner) [click.run{/nothing}] end", "inner end"),
+                arguments("start \\(inner) [click.run{/nothing}] end", "start inner end")
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("testSendProvider")

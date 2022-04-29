@@ -48,6 +48,7 @@ class SpigotLocalizedMessage implements LocalizedMessage {
             "|(\\[(hover)\\{(?<ohtext>.+)}]))"
     );
 
+    private static Boolean supportComponents;
     @NonNull private String rawMessage;
     private TextComponent[] cachedComponents;
 
@@ -82,7 +83,14 @@ class SpigotLocalizedMessage implements LocalizedMessage {
     }
 
     @Override public LocalizedMessage send(final CommandSender receiver) {
-        receiver.spigot().sendMessage(parseComponents(rawMessage));
+        if (supportComponents == null) {
+            final Matcher matcher = VERSION_PATTERN.matcher(getBukkitVersion());
+            supportComponents = matcher.matches() && (parseInt(matcher.group("major")) >= 9);
+        }
+        if (supportComponents && (receiver instanceof Player))
+            ((Player) receiver).spigot().sendMessage(parseComponents(rawMessage));
+        else
+            receiver.sendMessage(removeComponents(rawMessage));
         return this;
     }
 
@@ -115,6 +123,22 @@ class SpigotLocalizedMessage implements LocalizedMessage {
         for (CommandSender receiver: receivers)
             sendActionBar(receiver);
         return this;
+    }
+
+    protected String removeComponents(final String message) {
+        final StringBuilder result = new StringBuilder();
+        final StringBuilder source = new StringBuilder(message);
+        final Matcher matcher = EVENTS_PATTERN.matcher(source);
+        while (matcher.find()) {
+            if (matcher.start() > 0)
+                result.append(source.substring(0, matcher.start()));
+            result.append(matcher.group("target"));
+            source.delete(0, matcher.end());
+            matcher.reset();
+        }
+        if (source.length() > 0)
+            result.append(source);
+        return result.toString();
     }
 
     private TextComponent[] parseComponents(final String message) {
