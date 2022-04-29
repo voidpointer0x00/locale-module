@@ -40,7 +40,7 @@ import static org.bukkit.Bukkit.getBukkitVersion;
 import static org.bukkit.ChatColor.translateAlternateColorCodes;
 
 class SpigotLocalizedMessage implements LocalizedMessage {
-    private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.(?<major>\\d+)\\.(?<minor>\\d+)");
+    private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.(?<major>\\d+)(\\.(?<minor>\\d+))?");
     private static final Pattern EVENTS_PATTERN = Pattern.compile(
             "\\\\\\((?<target>.+)\\)\\s?" +
             "(((\\[(hover)\\{(?<htext>.+)}])?\\s?" +
