@@ -142,7 +142,7 @@ class SpigotLocalizedMessage implements LocalizedMessage {
         final String hoverText = matcher.group("htext") == null ? matcher.group("ohtext") : matcher.group("htext");
         if (hoverText == null)
             return null;
-        return new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TextComponent.fromLegacyText(hoverText)));
+        return new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(hoverText));
     }
 
     private ClickEvent getClickEvent(final Matcher matcher) {
