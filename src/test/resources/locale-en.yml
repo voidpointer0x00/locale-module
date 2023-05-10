@@ -1,4 +1,0 @@
-messages:
-  simple: 'A message without colors or anything'
-  colorful: '&cColorful message'
-  complex: '&eHere''s \(&csome)[hover.show_text{&e&lComplex message with hover effect!}]'
