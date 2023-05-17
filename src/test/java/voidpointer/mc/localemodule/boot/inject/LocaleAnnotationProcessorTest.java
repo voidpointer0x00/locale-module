@@ -37,7 +37,7 @@ public class LocaleAnnotationProcessorTest {
             @InjectLocale(filenamePattern = JUST_LOCALE_PATH) Locale second;
         }
         @Getter class SequentialTestTarget implements DoubleLocaleHolder {
-            @InjectLocale Locale first; @InjectLocale PluginLocale second;
+            @InjectLocale PluginLocale first; @InjectLocale PluginLocale second;
         }
         var named = new NamedTestTarget();
         var sequentialTarget = new SequentialTestTarget();
@@ -64,7 +64,7 @@ public class LocaleAnnotationProcessorTest {
 
     @Test(dataProvider="provideInjects", description="Tests whether annotation processor injects the right locales")
     public void testInjects(DoubleLocaleHolder doubleLocaleHolder, PluginLocaleFactory pluginLocaleFactory,
-                            Locale expectedFirst, Locale expectedSecond) {
+                            PluginLocale expectedFirst, PluginLocale expectedSecond) {
         LocaleAnnotationProcessor.process(doubleLocaleHolder, pluginLocaleFactory);
         assertSame(doubleLocaleHolder.getFirst(), expectedFirst);
         assertSame(doubleLocaleHolder.getSecond(), expectedSecond);
