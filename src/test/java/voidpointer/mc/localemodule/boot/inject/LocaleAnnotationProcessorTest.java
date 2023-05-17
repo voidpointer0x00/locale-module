@@ -13,12 +13,15 @@ import org.mockito.Mockito;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import voidpointer.mc.localemodule.Locale;
+import voidpointer.mc.localemodule.LocaleKey;
 import voidpointer.mc.localemodule.Log;
 import voidpointer.mc.localemodule.PluginLocale;
 
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertSame;
+import static org.testng.Assert.*;
 
 @Test(groups="inject")
 public class LocaleAnnotationProcessorTest {
@@ -67,8 +70,12 @@ public class LocaleAnnotationProcessorTest {
         assertSame(doubleLocaleHolder.getSecond(), expectedSecond);
     }
 
-    @Test(dependsOnMethods="testInjects", description="Tests whether annotation processor injects keys")
-    public void testInjectsKeys() {
-
+    @Test(dataProvider="provideKeys", dataProviderClass= InjectsKeysPluginLocaleMocker.class, dependsOnMethods="testInjects",
+            description="Tests whether annotation processor injects the right keys")
+    public void testInjectsKeys(PluginLocale locale, Map<String, String> expected) {
+        var localeKeys = locale.defaultKeys();
+        assertEquals(localeKeys.size(), expected.size());
+        for (final LocaleKey key : localeKeys)
+            assertEquals(key.defaultValue(), expected.get(key.path()));
     }
 }

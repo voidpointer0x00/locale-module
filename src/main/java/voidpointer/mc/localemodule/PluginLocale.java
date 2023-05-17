@@ -17,6 +17,8 @@ public interface PluginLocale extends Locale {
 
     void addKeys(@NotNull Collection<LocaleKey> localeKeys);
 
+    @NotNull Collection<LocaleKey> defaultKeys();
+
     @NotNull Log logger();
 
     void load();

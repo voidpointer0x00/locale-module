@@ -8,12 +8,19 @@
 
 package voidpointer.mc.localemodule.boot.inject.keys;
 
+import com.google.common.collect.ImmutableMap;
 import voidpointer.mc.localemodule.LocaleKey;
 import voidpointer.mc.localemodule.boot.inject.LocaleKeyContainer;
+
+import java.util.Map;
 
 @LocaleKeyContainer
 public class ExcludeTestKeys {
     public static final LocaleKey INCLUDED = LocaleKey.of("exclude-test.i-am-included", "I'm included");
     @LocaleKeyContainer.Exclude
     public static final LocaleKey EXCLUDED = LocaleKey.of("exclude-test.excluded", "Senpai notice me з:");
+
+    public static Map<String, String> expected() {
+        return ImmutableMap.of(INCLUDED.path(), INCLUDED.defaultValue());
+    }
 }

@@ -16,6 +16,7 @@ import voidpointer.mc.localemodule.*;
 import voidpointer.mc.localemodule.impl.config.YamlLocale;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 public final class BukkitLocale implements PluginLocale {
@@ -57,6 +58,10 @@ public final class BukkitLocale implements PluginLocale {
 
     @Override public void addKeys(@NotNull final Collection<LocaleKey> localeKeys) {
         yamlLocale.addKeys(localeKeys);
+    }
+
+    @Override public @NotNull Collection<LocaleKey> defaultKeys() {
+        return Collections.unmodifiableCollection(yamlLocale.defaultKeys());
     }
 
     @Override public @NotNull Log logger() {

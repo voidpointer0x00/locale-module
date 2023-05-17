@@ -8,10 +8,17 @@
 
 package voidpointer.mc.localemodule.boot.inject.keys.inner;
 
+import com.google.common.collect.ImmutableMap;
 import voidpointer.mc.localemodule.LocaleKey;
 import voidpointer.mc.localemodule.boot.inject.LocaleKeyContainer;
+
+import java.util.Map;
 
 @LocaleKeyContainer
 public final class PackageTestKeys {
     public static final LocaleKey PACKAGE_KEY = LocaleKey.of("pkg.package-key", "I'm included through package scan");
+
+    public static Map<String, String> expected() {
+        return ImmutableMap.of(PACKAGE_KEY.path(), PACKAGE_KEY.defaultValue());
+    }
 }

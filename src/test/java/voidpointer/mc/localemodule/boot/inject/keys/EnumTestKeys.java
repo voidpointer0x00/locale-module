@@ -8,10 +8,13 @@
 
 package voidpointer.mc.localemodule.boot.inject.keys;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.mc.localemodule.LocaleKey;
 import voidpointer.mc.localemodule.boot.inject.LocaleKeyContainer;
+
+import java.util.Map;
 
 @LocaleKeyContainer
 @RequiredArgsConstructor
@@ -19,6 +22,10 @@ public enum EnumTestKeys implements LocaleKey {
     LOADED("Plugin {plugin} loaded!");
 
     private final String defaultValue;
+
+    public static Map<String, String> expected() {
+        return ImmutableMap.of(LOADED.path(), LOADED.defaultValue());
+    }
 
     @Override public @NotNull String path() {
         return "enum-test." + LocaleKey.fromScreamingSnakeToKebab(toString());

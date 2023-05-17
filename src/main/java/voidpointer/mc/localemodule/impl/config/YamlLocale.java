@@ -50,6 +50,11 @@ public final class YamlLocale {
         defaultKeys.addAll(localeKeys);
     }
 
+    /** @return modifiable collection of default keys. */
+    public Collection<LocaleKey> defaultKeys() {
+        return defaultKeys;
+    }
+
     public void save() {
         defaultKeys.forEach(key -> config.addDefault(key.path(), key.defaultValue()));
         config.options().copyDefaults(true);

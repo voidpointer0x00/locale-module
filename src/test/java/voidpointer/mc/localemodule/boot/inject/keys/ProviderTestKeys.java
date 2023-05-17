@@ -8,12 +8,14 @@
 
 package voidpointer.mc.localemodule.boot.inject.keys;
 
+import com.google.common.collect.ImmutableMap;
 import voidpointer.mc.localemodule.LocaleKey;
 import voidpointer.mc.localemodule.boot.inject.LocaleKeyContainer;
 import voidpointer.mc.localemodule.boot.inject.ProvideLocaleKey;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @LocaleKeyContainer(onlyExplicitlyIncluded = true)
 public class ProviderTestKeys {
@@ -24,6 +26,14 @@ public class ProviderTestKeys {
     public static final LocaleKey SPECIAL = LocaleKey.of("warn.im-special", "Or am I..");
     /* this one is not included in providers, so it should not be visible at all. */
     public static final LocaleKey IGNORED = LocaleKey.of("warn.hehe", "They'll never see me...");
+
+    public static Map<String, String> expected() {
+        return ImmutableMap.of(
+                LOW_RAM.path(), LOW_RAM.defaultValue(),
+                NO_PAPI.path(), NO_PAPI.defaultValue(),
+                SPECIAL.path(), SPECIAL.defaultValue()
+        );
+    }
 
     @ProvideLocaleKey
     private static Collection<LocaleKey> provideWarnKeys() {
