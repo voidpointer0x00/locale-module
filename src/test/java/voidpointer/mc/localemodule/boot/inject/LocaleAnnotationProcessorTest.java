@@ -62,7 +62,7 @@ public class LocaleAnnotationProcessorTest {
         };
     }
 
-    @Test(dataProvider = "provideInjects", description="Tests whether annotation processor injects the right locales")
+    @Test(dataProvider="provideInjects", description="Tests whether annotation processor injects the right locales")
     public void testInjects(DoubleLocaleHolder doubleLocaleHolder, PluginLocaleFactory pluginLocaleFactory,
                             Locale expectedFirst, Locale expectedSecond) {
         LocaleAnnotationProcessor.process(doubleLocaleHolder, pluginLocaleFactory);
@@ -70,8 +70,8 @@ public class LocaleAnnotationProcessorTest {
         assertSame(doubleLocaleHolder.getSecond(), expectedSecond);
     }
 
-    @Test(dataProvider="provideKeys", dataProviderClass= InjectsKeysPluginLocaleMocker.class, dependsOnMethods="testInjects",
-            description="Tests whether annotation processor injects the right keys")
+    @Test(dataProvider="provideKeys", dataProviderClass=InjectsKeysPluginLocaleMocker.class, dependsOnMethods="testInjects",
+            description="Tests whether annotation processor injected the right keys")
     public void testInjectsKeys(PluginLocale locale, Map<String, String> expected) {
         var localeKeys = locale.defaultKeys();
         assertEquals(localeKeys.size(), expected.size());
