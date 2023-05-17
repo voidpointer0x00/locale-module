@@ -18,6 +18,7 @@ import java.util.Map;
 public class IncludeTestKeys {
     @LocaleKeyContainer.Include
     public static final LocaleKey INCLUDED = LocaleKey.of("include-test.included", "I'm included");
+    @SuppressWarnings("unused")
     public static final LocaleKey EXCLUDED = LocaleKey.of("include-test.excluded", "I'm excluded");
 
     public static Map<String, String> expected() {

@@ -25,6 +25,7 @@ public class ProviderTestKeys {
     public static final LocaleKey NO_PAPI = LocaleKey.of("warn.no-papi", "PlaceholderAPI not detected");
     public static final LocaleKey SPECIAL = LocaleKey.of("warn.im-special", "Or am I..");
     /* this one is not included in providers, so it should not be visible at all. */
+    @SuppressWarnings("unused")
     public static final LocaleKey IGNORED = LocaleKey.of("warn.hehe", "They'll never see me...");
 
     public static Map<String, String> expected() {

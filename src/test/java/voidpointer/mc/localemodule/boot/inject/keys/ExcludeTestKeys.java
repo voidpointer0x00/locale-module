@@ -17,6 +17,7 @@ import java.util.Map;
 @LocaleKeyContainer
 public class ExcludeTestKeys {
     public static final LocaleKey INCLUDED = LocaleKey.of("exclude-test.i-am-included", "I'm included");
+    @SuppressWarnings("unused")
     @LocaleKeyContainer.Exclude
     public static final LocaleKey EXCLUDED = LocaleKey.of("exclude-test.excluded", "Senpai notice me з:");
 
