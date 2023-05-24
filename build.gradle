@@ -45,9 +45,6 @@ subprojects {
         implementation 'org.jetbrains:annotations:24.0.1'
         annotationProcessor 'org.projectlombok:lombok:1.18.26'
         compileOnly 'org.projectlombok:lombok:1.18.26'
+        testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
     }
-}
-
-dependencies {
-    testImplementation 'junit:junit:4.13.2'
 }
