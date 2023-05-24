@@ -3,3 +3,4 @@
  */
 
 rootProject.name = 'locale-module'
+include 'api', 'bukkit'
