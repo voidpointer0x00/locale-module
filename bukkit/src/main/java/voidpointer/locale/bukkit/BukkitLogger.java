@@ -8,7 +8,6 @@
 
 package voidpointer.locale.bukkit;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Contract;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
 
 import static java.text.MessageFormat.format;
 
-@AllArgsConstructor(access=AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class BukkitLogger implements Log {
     public static final String IS_DEBUG_PATH = "locale.debug";
     private final Logger log;
