@@ -78,7 +78,7 @@ public final class TranslatableYamlLocaleFile implements LocaleFile {
         try {
             saveDefaultTask.accept(defaultPath);
         } catch (final Exception exception) {
-            log.warn("Could not save default resource for {}: {}", defaultPath, exception.getMessage());
+            log.debug("Could not save default resource for {}: {}", defaultPath, exception.getMessage());
             log.debug(exception);
         }
     }
