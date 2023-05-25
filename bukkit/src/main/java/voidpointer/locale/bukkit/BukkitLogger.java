@@ -18,8 +18,6 @@ import voidpointer.locale.api.Log;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-import static java.text.MessageFormat.format;
-
 @AllArgsConstructor
 public class BukkitLogger implements Log {
     public static final String IS_DEBUG_PATH = "locale.debug";
@@ -35,7 +33,7 @@ public class BukkitLogger implements Log {
         log.info(message);
     }
     @Override public void info(@NotNull final String message, final @Nullable Object... replacements) {
-        log.info(format(message, replacements));
+        log.info(insertPlaceholderLikeSlf4j(message, replacements));
     }
     @Override public void info(@NotNull final String message, @NotNull final Throwable throwable, final @Nullable Object... replacements) {
         info(message, replacements);
@@ -46,7 +44,7 @@ public class BukkitLogger implements Log {
         log.warning(message);
     }
     @Override public void warn(@NotNull final String message, final @Nullable Object... replacements) {
-        log.warning(format(message, replacements));
+        log.warning(insertPlaceholderLikeSlf4j(message, replacements));
     }
     @Override public void warn(@NotNull final String message, @NotNull final Throwable throwable, final @Nullable Object... replacements) {
         warn(message, replacements);
@@ -57,7 +55,7 @@ public class BukkitLogger implements Log {
         log.severe(message);
     }
     @Override public void error(@NotNull final String message, final @Nullable Object... replacements) {
-        log.severe(format(message, replacements));
+        log.severe(insertPlaceholderLikeSlf4j(message, replacements));
     }
     @Override public void error(@NotNull final String message, @NotNull final Throwable throwable, final @Nullable Object... replacements) {
         error(message, replacements);
