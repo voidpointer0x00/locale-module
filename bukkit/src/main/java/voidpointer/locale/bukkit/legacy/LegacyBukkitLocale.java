@@ -61,4 +61,12 @@ public class LegacyBukkitLocale extends AbstractBukkitLocale {
     @Override public @NotNull Message<CommandSender> get(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
         return new LegacyBukkitMessage(placeholderFactory.insert(localeStorage.translate(key), placeholders));
     }
+
+    @Override public @NotNull Message<CommandSender> raw(@NotNull LocaleKey key) {
+        return new RawLegacyBukkitMessage(localeStorage.translate(key));
+    }
+
+    @Override public @NotNull Message<CommandSender> raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
+        return new RawLegacyBukkitMessage(placeholderFactory.insert(localeStorage.translate(key), placeholders));
+    }
 }

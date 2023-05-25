@@ -23,6 +23,10 @@ public interface Locale<T> {
 
     @NotNull Message<T> get(@NotNull LocaleKey key, @NotNull Placeholder... placeholders);
 
+    @NotNull Message<T> raw(@NotNull LocaleKey key);
+
+    @NotNull Message<T> raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders);
+
     void addDefault(@NotNull final LocaleKey key);
 
     void addDefaults(@NotNull final LocaleKey... keys);

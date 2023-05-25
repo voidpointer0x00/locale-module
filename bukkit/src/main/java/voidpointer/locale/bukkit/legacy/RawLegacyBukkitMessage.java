@@ -8,43 +8,42 @@
 
 package voidpointer.locale.bukkit.legacy;
 
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import voidpointer.locale.api.Message;
-import voidpointer.locale.bukkit.BukkitMessage;
 
 import java.util.Collection;
 
-import static org.bukkit.ChatColor.translateAlternateColorCodes;
-
 @ToString
-public final class LegacyBukkitMessage extends RawLegacyBukkitMessage implements BukkitMessage {
-    private String parsed;
-
-    public LegacyBukkitMessage(@NotNull final String message) {
-        super(message);
-    }
+@EqualsAndHashCode
+@RequiredArgsConstructor
+public class RawLegacyBukkitMessage implements Message<CommandSender> {
+    protected final String message;
 
     @Override
     public @NotNull Message<CommandSender> send(@Nullable CommandSender audience) {
         if (audience != null)
-            audience.sendMessage(parsed == null ? parsed = translateAlternateColorCodes('&', message) : parsed);
+            audience.sendMessage(message);
         return this;
     }
 
     @Override
     public @NotNull Message<CommandSender> send(@NotNull CommandSender... audiences) {
-        for (final CommandSender receiver : audiences)
-            receiver.sendMessage(parsed == null ? parsed = translateAlternateColorCodes('&', message) : parsed);
+        for (final CommandSender audience : audiences)
+            audience.sendMessage(message);
         return this;
     }
 
     @Override
     public @NotNull Message<CommandSender> send(@NotNull Collection<? extends CommandSender> audiences) {
-        for (final CommandSender receiver : audiences)
-            receiver.sendMessage(parsed == null ? parsed = translateAlternateColorCodes('&', message) : parsed);
+        for (final CommandSender audience : audiences)
+            audience.sendMessage(message);
         return this;
     }
+
+    @Override public final @NotNull String literal() { return message; }
 }
