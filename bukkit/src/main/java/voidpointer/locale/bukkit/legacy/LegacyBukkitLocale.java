@@ -13,7 +13,6 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
 import voidpointer.locale.api.Log;
-import voidpointer.locale.api.Message;
 import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.BukkitLogger;
@@ -54,19 +53,19 @@ public class LegacyBukkitLocale extends AbstractBukkitLocale {
         audience.sendMessage(translateAlternateColorCodes('&', placeholderFactory.insert(localeStorage.translate(key), placeholders)));
     }
 
-    @Override public @NotNull Message<CommandSender> get(@NotNull LocaleKey key) {
+    @Override public @NotNull LegacyBukkitMessage get(@NotNull LocaleKey key) {
         return new LegacyBukkitMessage(localeStorage.translate(key));
     }
 
-    @Override public @NotNull Message<CommandSender> get(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
+    @Override public @NotNull LegacyBukkitMessage get(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
         return new LegacyBukkitMessage(placeholderFactory.insert(localeStorage.translate(key), placeholders));
     }
 
-    @Override public @NotNull Message<CommandSender> raw(@NotNull LocaleKey key) {
+    @Override public @NotNull RawLegacyBukkitMessage raw(@NotNull LocaleKey key) {
         return new RawLegacyBukkitMessage(localeStorage.translate(key));
     }
 
-    @Override public @NotNull Message<CommandSender> raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
+    @Override public @NotNull RawLegacyBukkitMessage raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
         return new RawLegacyBukkitMessage(placeholderFactory.insert(localeStorage.translate(key), placeholders));
     }
 }
