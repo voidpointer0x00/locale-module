@@ -63,6 +63,7 @@ public final class TranslatableYamlLocaleFile implements LocaleFile {
         if (!localeFile.exists() && !createFile(localeFile))
             return false;
         try {
+            yamlConfiguration.options().copyDefaults(true);
             yamlConfiguration.save(localeFile);
             return true;
         } catch (final IOException ioException) {
