@@ -13,7 +13,6 @@ import be.seeseemelk.mockbukkit.MockPlugin;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -27,9 +26,6 @@ import static org.testng.Assert.*;
 import static voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile.DEFAULT_FILENAME_PATTERN;
 
 public class LegacyBukkitLocaleIntegrationTest {
-    private static class TestPlugin extends JavaPlugin {
-    }
-
     private static final LocaleKey key = LocaleKey.of("key", "&7Valid text");
     private static final LocaleKey keyDefault = LocaleKey.of(key.path(), "&8Added as default");
     private static final String keyTranslated = "§7Valid text";
