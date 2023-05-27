@@ -40,27 +40,27 @@ public class LegacyBukkitPlaceholderFactory implements PlaceholderFactory<Comman
         }
     }
 
-    @Override public @NotNull Placeholder literal(String placeholder, Object replacement) {
+    @Override public @NotNull Placeholder literal(@NotNull String placeholder, @NotNull Object replacement) {
         return Placeholder.of(placeholder, replacement);
     }
 
-    @Override public @NotNull Placeholder literal(String placeholder, String replacement) {
+    @Override public @NotNull Placeholder literal(@NotNull String placeholder, @NotNull String replacement) {
         return Placeholder.of(placeholder, replacement);
     }
 
-    @Override public @NotNull Placeholder literal(String placeholder, Message<CommandSender> replacement) {
+    @Override public @NotNull Placeholder literal(@NotNull String placeholder, @NotNull Message<CommandSender> replacement) {
         return literal(placeholder, replacement.literal());
     }
 
-    @Override public @NotNull Placeholder parsed(String placeholder, Object replacement) {
-        return parsed(placeholder, replacement == null ? "" : replacement.toString());
+    @Override public @NotNull Placeholder parsed(@NotNull String placeholder, @NotNull Object replacement) {
+        return parsed(placeholder, replacement.toString());
     }
 
-    @Override public @NotNull Placeholder parsed(String placeholder, String replacement) {
-        return Placeholder.of(placeholder, ChatColor.translateAlternateColorCodes('&', replacement == null ? "" : replacement));
+    @Override public @NotNull Placeholder parsed(@NotNull String placeholder, @NotNull String replacement) {
+        return Placeholder.of(placeholder, ChatColor.translateAlternateColorCodes('&', replacement));
     }
 
-    @Override public @NotNull Placeholder parsed(String placeholder, Message<CommandSender> replacement) {
+    @Override public @NotNull Placeholder parsed(@NotNull String placeholder, @NotNull Message<CommandSender> replacement) {
         return parsed(placeholder, replacement.literal());
     }
 }

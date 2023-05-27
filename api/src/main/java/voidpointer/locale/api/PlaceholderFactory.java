@@ -11,10 +11,10 @@ package voidpointer.locale.api;
 import org.jetbrains.annotations.NotNull;
 
 public interface PlaceholderFactory<T> {
-    @NotNull Placeholder literal(final String placeholder, final Object replacement);
-    @NotNull Placeholder literal(final String placeholder, final String replacement);
-    @NotNull Placeholder literal(final String placeholder, final Message<T> replacement);
-    @NotNull Placeholder parsed(final String placeholder, final Object replacement);
-    @NotNull Placeholder parsed(final String placeholder, final String replacement);
-    @NotNull Placeholder parsed(final String placeholder, final Message<T> replacement);
+    @NotNull Placeholder literal(@NotNull final String placeholder, @NotNull final Object replacement);
+    @NotNull Placeholder literal(@NotNull final String placeholder, @NotNull final String replacement);
+    @NotNull Placeholder literal(@NotNull final String placeholder, @NotNull final Message<T> replacement);
+    @NotNull Placeholder parsed(@NotNull final String placeholder, @NotNull final Object replacement);
+    @NotNull Placeholder parsed(@NotNull final String placeholder, @NotNull final String replacement);
+    @NotNull Placeholder parsed(@NotNull final String placeholder, @NotNull final Message<T> replacement);
 }
