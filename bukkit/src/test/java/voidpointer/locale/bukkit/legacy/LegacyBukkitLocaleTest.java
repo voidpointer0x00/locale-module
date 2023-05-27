@@ -54,7 +54,8 @@ class LegacyBukkitLocaleTest {
 
     @BeforeAll
     static void setup() {
-        MockBukkit.mock();
+        if (!MockBukkit.isMocked())
+            MockBukkit.mock();
         mockPlugin = MockBukkit.createMockPlugin();
         legacyBukkitLocale = LegacyBukkitLocale.forPlugin(mockPlugin);
     }
