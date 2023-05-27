@@ -14,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
 import voidpointer.locale.api.Log;
 import voidpointer.locale.api.Placeholder;
+import voidpointer.locale.api.PlaceholderFactory;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.BukkitLogger;
-import voidpointer.locale.bukkit.BukkitPlaceholderFactory;
 import voidpointer.locale.bukkit.storage.LocaleStorage;
 import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile;
 import voidpointer.locale.bukkit.storage.yaml.YamlLocaleStorage;
@@ -41,7 +41,7 @@ public class LegacyBukkitLocale extends AbstractBukkitLocale {
                 .build()));
     }
 
-    @Override public final @NotNull BukkitPlaceholderFactory placeholders() {
+    @Override public final @NotNull PlaceholderFactory<CommandSender> placeholders() {
         return placeholderFactory;
     }
 

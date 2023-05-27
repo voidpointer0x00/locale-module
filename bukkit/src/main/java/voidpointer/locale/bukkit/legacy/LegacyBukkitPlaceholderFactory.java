@@ -13,9 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.Message;
 import voidpointer.locale.api.Placeholder;
-import voidpointer.locale.bukkit.BukkitPlaceholderFactory;
+import voidpointer.locale.api.PlaceholderFactory;
 
-public class LegacyBukkitPlaceholderFactory implements BukkitPlaceholderFactory {
+public class LegacyBukkitPlaceholderFactory implements PlaceholderFactory<CommandSender> {
     public static final char LEGACY_PLACEHOLDER_START = '{';
     public static final char LEGACY_PLACEHOLDER_END = '{';
 
