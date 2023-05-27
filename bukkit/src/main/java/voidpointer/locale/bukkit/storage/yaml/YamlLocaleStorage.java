@@ -23,7 +23,7 @@ public class YamlLocaleStorage extends ConfigurationSectionYamlStorage {
 
     @Override public @NotNull String translate(@NotNull LocaleKey key) {
         if (!localeSection.contains(key.path()))
-            log.warn("Missing {} translation", key.path());
+            log.warn("Missing translation for \"{}\" key", key.path());
         return localeSection.getString(key.path(), key.defaultValue());
     }
 
