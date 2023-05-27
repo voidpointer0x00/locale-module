@@ -16,7 +16,7 @@ public interface BukkitLocale extends Locale<CommandSender> {
     @Override
     @NotNull BukkitPlaceholderFactory placeholders();
 
-    void load();
+    boolean load();
 
-    void save();
+    boolean save();
 }

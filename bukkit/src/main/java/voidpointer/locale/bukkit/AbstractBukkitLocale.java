@@ -43,11 +43,11 @@ public abstract class AbstractBukkitLocale implements BukkitLocale {
         localeStorage.removeDefaults(keys);
     }
 
-    @Override public void load() {
-        localeStorage.load();
+    @Override public boolean load() {
+        return localeStorage.load();
     }
 
-    @Override public void save() {
-        localeStorage.save();
+    @Override public boolean save() {
+        return localeStorage.save();
     }
 }
