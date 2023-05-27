@@ -50,7 +50,7 @@ public class LegacyBukkitLocale extends AbstractBukkitLocale {
     }
 
     @Override public void send(@NotNull LocaleKey key, @NotNull CommandSender audience, @NotNull Placeholder... placeholders) {
-        audience.sendMessage(translateAlternateColorCodes('&', placeholderFactory.insert(localeStorage.translate(key), placeholders)));
+        audience.sendMessage(placeholderFactory.insert(translateAlternateColorCodes('&', localeStorage.translate(key)), placeholders));
     }
 
     @Override public @NotNull LegacyBukkitMessage get(@NotNull LocaleKey key) {
