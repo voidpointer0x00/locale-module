@@ -13,7 +13,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
-import voidpointer.locale.api.Message;
 import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.storage.LocaleStorage;
@@ -55,7 +54,7 @@ public class NativePaperLocale extends AbstractBukkitLocale {
     }
 
     @Override
-    public @NotNull Message<CommandSender> raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
+    public @NotNull ComponentMessage raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders) {
         return ComponentMessage.raw(localeStorage.translate(key), placeholders);
     }
 
