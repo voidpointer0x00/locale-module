@@ -10,16 +10,15 @@ package voidpointer.locale.api;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface Placeholder {
     @Contract(pure=true)
     @NotNull String key();
 
     @Contract(pure=true)
-    @Nullable String replacement();
+    @NotNull String replacement();
 
-    static Placeholder of(@NotNull final String key, @Nullable Object replacement) {
-        return new ImmutablePlaceholder(key, replacement != null ? replacement.toString() : "");
+    static Placeholder of(@NotNull final String key, @NotNull Object replacement) {
+        return new ImmutablePlaceholder(key, replacement.toString());
     }
 }
