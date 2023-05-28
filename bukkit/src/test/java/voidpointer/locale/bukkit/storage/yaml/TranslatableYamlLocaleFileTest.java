@@ -8,11 +8,10 @@
 
 package voidpointer.locale.bukkit.storage.yaml;
 
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import voidpointer.locale.api.LocaleKey;
 import voidpointer.locale.bukkit.BukkitLogger;
 
@@ -21,16 +20,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.of;
+import static org.testng.Assert.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TranslatableYamlLocaleFileTest {
+public class TranslatableYamlLocaleFileTest {
 
     static void saveResource(final String path) {
         try (var in = Test.class.getClassLoader().getResourceAsStream(path)) {
@@ -56,9 +52,9 @@ class TranslatableYamlLocaleFileTest {
     private static TranslatableYamlLocaleFile emptyLocaleFile;
     private static TranslatableYamlLocaleFile nonemptyLocaleFile;
 
-    @BeforeAll
-    static void setup(@TempDir File tempDataFolder) {
-        TranslatableYamlLocaleFileTest.tempDataFolder = tempDataFolder;
+    @BeforeClass
+    static void setup() throws IOException {
+        TranslatableYamlLocaleFileTest.tempDataFolder = Files.createTempDirectory("native-paper-locale-test").toFile();
         nonexistentLocaleFile = TranslatableYamlLocaleFile.builder()
                 .log(new BukkitLogger(Logger.getAnonymousLogger(), () -> false))
                 .dataFolder(tempDataFolder)
@@ -82,40 +78,40 @@ class TranslatableYamlLocaleFileTest {
                 .build();
     }
 
-    static Stream<Arguments> configFails() {
-        return Stream.of(of(nonexistentLocaleFile), of(emptyLocaleFile));
+    @AfterClass
+    static void deleteTmp() {
+        //noinspection ResultOfMethodCallIgnored
+        tempDataFolder.delete();
     }
 
-    @Order(0)
-    @ParameterizedTest
-    @MethodSource
-    void configFails(LocaleFile localeFile) {
-        assertThrowsExactly(IllegalStateException.class, localeFile::config);
+    @DataProvider
+    public static Object[][] configFails() {
+        return new Object[][] { {nonexistentLocaleFile}, {nonemptyLocaleFile} };
     }
 
-    @Order(1)
-    @Test
-    void loadEmpty() {
+    @Test(dataProvider = "configFails")
+    public void configFails(LocaleFile localeFile) {
+        assertThrows(IllegalStateException.class, localeFile::config);
+    }
+
+    @Test(dependsOnMethods="configFails")
+    public void loadEmpty() {
         assertTrue(emptyLocaleFile.load());
-        assertDoesNotThrow(emptyLocaleFile::config);
+        //noinspection ResultOfMethodCallIgnored
+        emptyLocaleFile.config(); /* doesn't throw */
         assertFalse(emptyLocaleFile.config().contains(localeKey.path()));
     }
 
-    @Order(1)
-    @Test
-    void loadNonempty() {
+    @Test(dependsOnMethods = "loadEmpty")
+    public void loadNonempty() {
         assertTrue(nonemptyLocaleFile.load());
-        assertDoesNotThrow(nonemptyLocaleFile::config);
+        //noinspection ResultOfMethodCallIgnored
+        nonemptyLocaleFile.config(); /* doesn't throw */
         assertTrue(nonemptyLocaleFile.config().contains(localeKey.path()));
     }
 
-    @Test
-    void loadAndUpdateDefaults() {
-    }
-
-    @Order(3)
-    @Test
-    void saveAddToEmpty() {
+    @Test(dependsOnMethods = "loadNonempty")
+    public void saveAddToEmpty() {
         assertFalse(emptyLocaleFile.config().contains(localeKey.path()));
         emptyLocaleFile.config().set(localeKey.path(), localeKey.defaultValue());
         assertTrue(emptyLocaleFile.config().contains(localeKey.path()));

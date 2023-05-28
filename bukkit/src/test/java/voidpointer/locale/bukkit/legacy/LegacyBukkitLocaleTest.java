@@ -10,49 +10,39 @@ package voidpointer.locale.bukkit.legacy;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.MockPlugin;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import voidpointer.locale.api.Placeholder;
 
-import java.util.stream.Stream;
+import static org.testng.Assert.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.params.provider.Arguments.of;
+public class LegacyBukkitLocaleTest {
 
-class LegacyBukkitLocaleTest {
-
-    public static Stream<Arguments> placeholdersLiteral() {
-        return Stream.of(
-                of("", "", ""),
-                of("&", "key", "&"),
-                of("&7", "key", "&7"),
-                of("&7Hi!", "key", "&7Hi!"),
-                of("§7Hi!", "key", "§7Hi!"),
-                of("1", "key", 1),
-                of("1.0", "key", 1.0F),
-                of("1.0", "key", 1.0D)
-        );
+    @DataProvider
+    public static Object[][] placeholdersLiteral() {
+        return new Object[][] {
+                {"", "", ""}, {"&", "key", "&"},
+                {"&7", "key", "&7"}, {"&7Hi!", "key", "&7Hi!"},
+                {"§7Hi!", "key", "§7Hi!"}, {"1", "key", 1},
+                {"1.0", "key", 1.0F}, {"1.0", "key", 1.0D}
+        };
     }
 
-    public static Stream<Arguments> placeholdersParsed() {
-        return Stream.of(
-                of("", "", ""),
-                of("&", "key", "&"),
-                of("§7", "key", "&7"),
-                of("§7Hi!", "key", "&7Hi!"),
-                of("§7Hi!", "key", "§7Hi!"),
-                of("1", "key", 1),
-                of("1.0", "key", 1.0F),
-                of("1.0", "key", 1.0D)
-        );
+    @DataProvider
+    public static Object[][] placeholdersParsed() {
+        return new Object[][] {
+                {"", "", ""}, {"&", "key", "&"},
+                {"§7", "key", "&7"}, {"§7Hi!", "key", "&7Hi!"},
+                {"§7Hi!", "key", "§7Hi!"}, {"1", "key", 1},
+                {"1.0", "key", 1.0F}, {"1.0", "key", 1.0D}
+        };
     }
 
     static MockPlugin mockPlugin;
     static LegacyBukkitLocale legacyBukkitLocale;
 
-    @BeforeAll
+    @BeforeClass
     static void setup() {
         if (!MockBukkit.isMocked())
             MockBukkit.mock();
@@ -60,17 +50,15 @@ class LegacyBukkitLocaleTest {
         legacyBukkitLocale = LegacyBukkitLocale.forPlugin(mockPlugin);
     }
 
-    @ParameterizedTest
-    @MethodSource
-    void placeholdersLiteral(String expectedReplacement, String key, Object replacement) {
+    @Test(dataProvider = "placeholdersLiteral")
+    public void placeholdersLiteral(String expectedReplacement, String key, Object replacement) {
         Placeholder literal = legacyBukkitLocale.placeholders().literal(key, replacement);
         assertEquals(expectedReplacement, literal.replacement());
         assertEquals(key, literal.key());
     }
 
-    @ParameterizedTest
-    @MethodSource
-    void placeholdersParsed(String expectedReplacement, String key, Object replacement) {
+    @Test(dataProvider = "placeholdersParsed")
+    public void placeholdersParsed(String expectedReplacement, String key, Object replacement) {
         Placeholder literal = legacyBukkitLocale.placeholders().parsed(key, replacement);
         assertEquals(expectedReplacement, literal.replacement());
         assertEquals(key, literal.key());

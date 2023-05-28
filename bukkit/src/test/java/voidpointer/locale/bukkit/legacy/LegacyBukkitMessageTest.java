@@ -11,26 +11,25 @@ package voidpointer.locale.bukkit.legacy;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.Collection;
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
-class LegacyBukkitMessageTest {
+
+public class LegacyBukkitMessageTest {
     static PlayerMock mockedSingleReceiver;
     static Collection<? extends PlayerMock> mockedMultipleReceivers;
     static PlayerMock[] receiversArray;
 
-    @BeforeAll
+    @BeforeClass
     static void setUp() {
-        ServerMock mock = MockBukkit.mock();
+        ServerMock mock = MockBukkit.getOrCreateMock();
         mockedSingleReceiver = mock.addPlayer();
         mock.addPlayer();
         mock.addPlayer();
@@ -40,24 +39,8 @@ class LegacyBukkitMessageTest {
         mockedMultipleReceivers.toArray(receiversArray);
     }
 
-    public static Stream<Arguments> supplyMessages() {
-        return Stream.of(
-                Arguments.of("", ""),
-                Arguments.of(" ", " "),
-                Arguments.of(" .", " ."),
-                Arguments.of(". ", ". "),
-                Arguments.of("&", "&"),
-                Arguments.of("  &", "  &"),
-                Arguments.of("&  ", "&  "),
-                Arguments.of("&&&&  ", "&&&&  "),
-                Arguments.of("§a  ", "&a  "),
-                Arguments.of("§b  ", "&b  "),
-                Arguments.of("§6 H§5e§4l§3l§2o§1! ", "&6 H&5e&4l&3l&2o&1! ")
-        );
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
-    @BeforeEach
+    @BeforeMethod
     void clearMessages() {
         while (mockedSingleReceiver.nextMessage() != null)
             ;
@@ -69,17 +52,24 @@ class LegacyBukkitMessageTest {
                 ;
     }
 
-    @ParameterizedTest
-    @MethodSource("supplyMessages")
-    void testSingleSend(String expected, String message) {
+    @DataProvider
+    public static Object[][] supplyMessages() {
+        return new Object[][] {
+                {"", ""}, {" .", " ."}, {". ", ". "},
+                {"&", "&"}, {" &", " &"}, {"& ", "& "},
+                {"&&&", "&&&"}, {"§a", "&a"}, {"§6 H§5e§4l§3l§2o§1! ", "&6 H&5e&4l&3l&2o&1! "}
+        };
+    }
+
+    @Test(dataProvider = "supplyMessages")
+    public void testSingleSend(String expected, String message) {
         new LegacyBukkitMessage(message).send(mockedSingleReceiver);
         assertEquals(expected, mockedSingleReceiver.nextMessage());
         assertNull(mockedSingleReceiver.nextMessage(), "The message was sent multiple times!");
     }
 
-    @ParameterizedTest
-    @MethodSource("supplyMessages")
-    void testSingleSendForAll(String expected, String message) {
+    @Test(dataProvider = "supplyMessages")
+    public void testSingleSendForAll(String expected, String message) {
         var legacyBukkitMessage = new LegacyBukkitMessage(message);
         for (var mockedMultipleReceiver : mockedMultipleReceivers) {
             legacyBukkitMessage.send(mockedMultipleReceiver);
@@ -88,9 +78,9 @@ class LegacyBukkitMessageTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("supplyMessages")
-    void testSend(String expected, String message) {
+
+    @Test(dataProvider = "supplyMessages")
+    public void testSend(String expected, String message) {
         var legacyBukkitMessage = new LegacyBukkitMessage(message);
         legacyBukkitMessage.send(mockedMultipleReceivers);
         for (var mockedMultipleReceiver : mockedMultipleReceivers) {
@@ -99,9 +89,8 @@ class LegacyBukkitMessageTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("supplyMessages")
-    void testSend1(String expected, String message) {
+    @Test(dataProvider = "supplyMessages")
+    public void testSend1(String expected, String message) {
         new LegacyBukkitMessage(message).send(receiversArray);
         for (var receiver : receiversArray) {
             assertEquals(expected, receiver.nextMessage());
@@ -109,9 +98,8 @@ class LegacyBukkitMessageTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("supplyMessages")
-    void literal(String ignore, String literal) {
+    @Test(dataProvider = "supplyMessages")
+    public void literal(String ignore, String literal) {
         assertEquals(literal, new LegacyBukkitMessage(literal).literal());
     }
 }

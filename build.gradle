@@ -16,7 +16,6 @@ subprojects {
     }
 
     test {
-        useJUnitPlatform()
         useTestNG()
     }
 
