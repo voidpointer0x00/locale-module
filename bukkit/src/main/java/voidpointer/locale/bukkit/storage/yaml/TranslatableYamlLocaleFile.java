@@ -11,6 +11,7 @@ package voidpointer.locale.bukkit.storage.yaml;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import voidpointer.locale.api.Log;
@@ -23,6 +24,7 @@ import java.util.function.Supplier;
 @Getter
 @Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 public final class TranslatableYamlLocaleFile implements LocaleFile {
     public static final String DEFAULT_FILENAME_PATTERN = "locale/%s.yml";
 
