@@ -15,6 +15,11 @@ subprojects {
         }
     }
 
+    test {
+        useJUnitPlatform()
+        useTestNG()
+    }
+
     repositories {
         mavenCentral()
         maven { url = "https://repo.papermc.io/repository/maven-public/" }
