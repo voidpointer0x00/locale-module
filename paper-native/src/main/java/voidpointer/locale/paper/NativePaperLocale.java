@@ -45,7 +45,7 @@ public class NativePaperLocale extends AbstractBukkitLocale {
     }
 
     public @NotNull ComponentMessage get(@NotNull LocaleKey key, @NotNull TagResolver... resolvers) {
-        return new ComponentMessage(miniMessage().deserialize(localeStorage.translate(key), resolvers));
+        return ComponentMessage.component(miniMessage().deserialize(localeStorage.translate(key), resolvers));
     }
 
     @Override

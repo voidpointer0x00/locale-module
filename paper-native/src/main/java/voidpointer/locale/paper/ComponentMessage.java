@@ -39,6 +39,10 @@ public record ComponentMessage(Component component) implements Message<CommandSe
         return new ComponentMessage(plainText().deserialize(miniMessage().escapeTags(content, placeholdersToResolvers(placeholders))));
     }
 
+    public static ComponentMessage component(Component component) {
+        return new ComponentMessage(component);
+    }
+
     public static TagResolver[] placeholdersToResolvers(final voidpointer.locale.api.Placeholder[] placeholders) {
         TagResolver[] resolvers = new TagResolver[placeholders.length];
         for (int index = 0; index < resolvers.length; index++) {
