@@ -10,6 +10,7 @@ package voidpointer.locale.paper;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.CommandSender;
@@ -23,6 +24,8 @@ import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
 import static net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText;
 
 public record ComponentMessage(Component component) implements Message<CommandSender> {
+    public static final MiniMessage EMPTY_MM = MiniMessage.builder().tags(TagResolver.empty()).build();
+
     public static ComponentMessage parsed(@NotNull final String content) {
         return new ComponentMessage(miniMessage().deserialize(content));
     }
@@ -36,7 +39,11 @@ public record ComponentMessage(Component component) implements Message<CommandSe
     }
 
     public static ComponentMessage raw(String content, voidpointer.locale.api.Placeholder[] placeholders) {
-        return new ComponentMessage(plainText().deserialize(miniMessage().escapeTags(content, placeholdersToResolvers(placeholders))));
+        return raw(content, placeholdersToResolvers(placeholders));
+    }
+
+    public static ComponentMessage raw(String content, TagResolver... resolvers) {
+        return new ComponentMessage(EMPTY_MM.deserialize(content, resolvers));
     }
 
     public static ComponentMessage component(Component component) {

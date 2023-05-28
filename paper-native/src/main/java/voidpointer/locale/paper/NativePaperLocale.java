@@ -18,7 +18,6 @@ import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.storage.LocaleStorage;
 
 import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
-import static net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText;
 import static voidpointer.locale.paper.ComponentMessage.parsed;
 import static voidpointer.locale.paper.ComponentMessage.placeholdersToResolvers;
 
@@ -59,7 +58,7 @@ public class NativePaperLocale extends AbstractBukkitLocale {
     }
 
     public @NotNull ComponentMessage raw(@NotNull LocaleKey key, @NotNull TagResolver... resolvers) {
-        return new ComponentMessage(plainText().deserialize(miniMessage().escapeTags(localeStorage.translate(key), resolvers)));
+        return ComponentMessage.raw(localeStorage.translate(key), resolvers);
     }
 
     public void send(@NotNull LocaleKey key, @NotNull Audience audience, @NotNull TagResolver... resolvers) {
