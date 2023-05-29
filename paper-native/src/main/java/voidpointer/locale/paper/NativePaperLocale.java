@@ -11,11 +11,14 @@ package voidpointer.locale.paper;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
 import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.storage.LocaleStorage;
+import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile;
+import voidpointer.locale.bukkit.storage.yaml.YamlLocaleStorage;
 
 import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
 import static voidpointer.locale.paper.ComponentMessage.parsed;
@@ -23,6 +26,18 @@ import static voidpointer.locale.paper.ComponentMessage.placeholdersToResolvers;
 
 public class NativePaperLocale extends AbstractBukkitLocale {
     private final ComponentPlaceholderFactory placeholderFactory = new ComponentPlaceholderFactory();
+
+    /** Constructs the locale with default parameters */
+    public static NativePaperLocale forPlugin(final Plugin plugin) {
+        var log = new SLF4JLog(plugin.getSLF4JLogger(), () -> plugin.getConfig().getBoolean("locale.debug", false));
+        return new NativePaperLocale(new YamlLocaleStorage(log, TranslatableYamlLocaleFile.builder()
+                .dataFolder(plugin.getDataFolder())
+                .filenamePattern(TranslatableYamlLocaleFile.DEFAULT_FILENAME_PATTERN)
+                .languageProvider(() -> plugin.getConfig().getString("locale.lang", "en"))
+                .saveDefaultTask((path) -> plugin.saveResource(path, true))
+                .log(log)
+                .build()));
+    }
 
     public NativePaperLocale(@NotNull LocaleStorage localeStorage) {
         super(localeStorage);
