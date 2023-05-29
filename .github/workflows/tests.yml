@@ -4,9 +4,9 @@ name: Tests
 
 on:
   push:
-    branches: [ release, dev, feature/*, bugfix/* ]
+    branches: [ release, dev, feature/*, fix/*, v/* ]
   pull_request:
-    branches: [ release, dev, feature/*, bugfix/* ]
+    branches: [ release, dev, feature/*, fix/*, v/* ]
 
 jobs:
   build:
