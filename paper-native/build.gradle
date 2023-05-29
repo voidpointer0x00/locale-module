@@ -3,8 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-project.version '1.0.0-preview'
-
 dependencies {
     implementation project(':api')
     implementation project(':bukkit')
