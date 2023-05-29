@@ -18,7 +18,7 @@ import voidpointer.locale.api.LocaleKey;
 import voidpointer.locale.api.Log;
 import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.BukkitLogger;
-import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile;
+import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlYamlLocaleFile;
 import voidpointer.locale.bukkit.storage.yaml.YamlLocaleStorage;
 
 import java.io.File;
@@ -36,7 +36,7 @@ import static net.kyori.adventure.text.format.TextDecoration.UNDERLINED;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static voidpointer.locale.api.LocaleKey.of;
-import static voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile.DEFAULT_FILENAME_PATTERN;
+import static voidpointer.locale.bukkit.storage.yaml.TranslatableYamlYamlLocaleFile.DEFAULT_FILENAME_PATTERN;
 
 public class NativePaperLocaleTest {
     public static Placeholder EMPTY_PLACEHOLDER = Placeholder.of("", "");
@@ -48,7 +48,7 @@ public class NativePaperLocaleTest {
     static void setup() throws IOException {
         tmp = Files.createTempDirectory("native-paper-locale-test").toFile();
         Log log = new BukkitLogger(Logger.getGlobal(), () -> false);
-        locale = new NativePaperLocale(new YamlLocaleStorage(log, TranslatableYamlLocaleFile.builder()
+        locale = new NativePaperLocale(new YamlLocaleStorage(log, TranslatableYamlYamlLocaleFile.builder()
                 .filenamePattern(DEFAULT_FILENAME_PATTERN)
                 .log(log)
                 .languageProvider(() -> "")

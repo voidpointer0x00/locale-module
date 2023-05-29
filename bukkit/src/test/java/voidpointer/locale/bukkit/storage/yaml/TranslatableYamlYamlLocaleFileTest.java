@@ -26,7 +26,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static org.testng.Assert.*;
 
-public class TranslatableYamlLocaleFileTest {
+public class TranslatableYamlYamlLocaleFileTest {
 
     static void saveResource(final String path) {
         try (var in = Test.class.getClassLoader().getResourceAsStream(path)) {
@@ -48,33 +48,33 @@ public class TranslatableYamlLocaleFileTest {
     private static final LocaleKey localeKey = LocaleKey.of("msg", "hi");
     private static final LocaleKey newKey = LocaleKey.of("new", "key");
     private static File tempDataFolder;
-    private static TranslatableYamlLocaleFile nonexistentLocaleFile;
-    private static TranslatableYamlLocaleFile emptyLocaleFile;
-    private static TranslatableYamlLocaleFile nonemptyLocaleFile;
+    private static TranslatableYamlYamlLocaleFile nonexistentLocaleFile;
+    private static TranslatableYamlYamlLocaleFile emptyLocaleFile;
+    private static TranslatableYamlYamlLocaleFile nonemptyLocaleFile;
 
     @BeforeClass
     static void setup() throws IOException {
-        TranslatableYamlLocaleFileTest.tempDataFolder = Files.createTempDirectory("native-paper-locale-test").toFile();
-        nonexistentLocaleFile = TranslatableYamlLocaleFile.builder()
+        TranslatableYamlYamlLocaleFileTest.tempDataFolder = Files.createTempDirectory("native-paper-locale-test").toFile();
+        nonexistentLocaleFile = TranslatableYamlYamlLocaleFile.builder()
                 .log(new BukkitLogger(Logger.getAnonymousLogger(), () -> false))
                 .dataFolder(tempDataFolder)
                 .languageProvider(() -> "")
                 .filenamePattern("ignore the exception")
-                .saveDefaultTask(TranslatableYamlLocaleFileTest::saveResource)
+                .saveDefaultTask(TranslatableYamlYamlLocaleFileTest::saveResource)
                 .build();
-        emptyLocaleFile = TranslatableYamlLocaleFile.builder()
+        emptyLocaleFile = TranslatableYamlYamlLocaleFile.builder()
                 .log(new BukkitLogger(Logger.getGlobal(), () -> true))
                 .dataFolder(tempDataFolder)
                 .languageProvider(() -> "")
                 .filenamePattern("empty.yml")
-                .saveDefaultTask(TranslatableYamlLocaleFileTest::saveResource)
+                .saveDefaultTask(TranslatableYamlYamlLocaleFileTest::saveResource)
                 .build();
-        nonemptyLocaleFile = TranslatableYamlLocaleFile.builder()
+        nonemptyLocaleFile = TranslatableYamlYamlLocaleFile.builder()
                 .log(new BukkitLogger(Logger.getGlobal(), () -> true))
                 .dataFolder(tempDataFolder)
                 .languageProvider(() -> "")
                 .filenamePattern("nonempty.yml")
-                .saveDefaultTask(TranslatableYamlLocaleFileTest::saveResource)
+                .saveDefaultTask(TranslatableYamlYamlLocaleFileTest::saveResource)
                 .build();
     }
 
@@ -90,8 +90,8 @@ public class TranslatableYamlLocaleFileTest {
     }
 
     @Test(dataProvider = "configFails")
-    public void configFails(LocaleFile localeFile) {
-        assertThrows(IllegalStateException.class, localeFile::config);
+    public void configFails(YamlLocaleFile yamlLocaleFile) {
+        assertThrows(IllegalStateException.class, yamlLocaleFile::config);
     }
 
     @Test(dependsOnMethods="configFails")

@@ -10,7 +10,7 @@ package voidpointer.locale.bukkit.storage.yaml;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public interface LocaleFile {
+public interface YamlLocaleFile {
     /** @throws IllegalStateException if the configuration was not loaded first. */
     ConfigurationSection config() throws IllegalStateException;
 

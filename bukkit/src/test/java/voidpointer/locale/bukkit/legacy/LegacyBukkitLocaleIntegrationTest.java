@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import static java.lang.String.format;
 import static org.testng.Assert.*;
-import static voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile.DEFAULT_FILENAME_PATTERN;
+import static voidpointer.locale.bukkit.storage.yaml.TranslatableYamlYamlLocaleFile.DEFAULT_FILENAME_PATTERN;
 
 public class LegacyBukkitLocaleIntegrationTest {
     private static final LocaleKey key = LocaleKey.of("key", "&7Valid text");

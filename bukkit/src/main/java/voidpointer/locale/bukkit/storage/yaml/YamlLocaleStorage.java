@@ -14,11 +14,11 @@ import voidpointer.locale.api.Log;
 
 public class YamlLocaleStorage extends ConfigurationSectionYamlStorage {
     private final Log log;
-    private final LocaleFile localeFile;
+    private final YamlLocaleFile yamlLocaleFile;
 
-    public YamlLocaleStorage(final Log log, final LocaleFile localeFile) {
+    public YamlLocaleStorage(final Log log, final YamlLocaleFile yamlLocaleFile) {
         this.log = log;
-        this.localeFile = localeFile;
+        this.yamlLocaleFile = yamlLocaleFile;
     }
 
     @Override public @NotNull String translate(@NotNull LocaleKey key) {
@@ -32,14 +32,14 @@ public class YamlLocaleStorage extends ConfigurationSectionYamlStorage {
     }
 
     @Override public final boolean load() {
-        if (!localeFile.load())
+        if (!yamlLocaleFile.load())
             return false;
-        this.localeSection = localeFile.config();
+        this.localeSection = yamlLocaleFile.config();
         return true;
     }
 
     @Override public final boolean save() {
         applyDefaultKeysCache();
-        return localeFile.save();
+        return yamlLocaleFile.save();
     }
 }

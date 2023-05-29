@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-public final class TranslatableYamlLocaleFile implements LocaleFile {
+public final class TranslatableYamlYamlLocaleFile implements YamlLocaleFile {
     public static final String DEFAULT_FILENAME_PATTERN = "locale/%s.yml";
 
     private final String filenamePattern;

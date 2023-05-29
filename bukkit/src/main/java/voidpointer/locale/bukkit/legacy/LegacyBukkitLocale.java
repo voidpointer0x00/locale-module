@@ -17,7 +17,7 @@ import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.BukkitLogger;
 import voidpointer.locale.bukkit.storage.LocaleStorage;
-import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlLocaleFile;
+import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlYamlLocaleFile;
 import voidpointer.locale.bukkit.storage.yaml.YamlLocaleStorage;
 
 import static org.bukkit.ChatColor.translateAlternateColorCodes;
@@ -31,8 +31,8 @@ public class LegacyBukkitLocale extends AbstractBukkitLocale {
 
     public static LegacyBukkitLocale forPlugin(final Plugin plugin) {
         Log log = new BukkitLogger(plugin);
-        return new LegacyBukkitLocale(new YamlLocaleStorage(log, TranslatableYamlLocaleFile.builder()
-                .filenamePattern(TranslatableYamlLocaleFile.DEFAULT_FILENAME_PATTERN)
+        return new LegacyBukkitLocale(new YamlLocaleStorage(log, TranslatableYamlYamlLocaleFile.builder()
+                .filenamePattern(TranslatableYamlYamlLocaleFile.DEFAULT_FILENAME_PATTERN)
                 .saveDefaultTask((path) -> plugin.saveResource(path, true))
                 .languageProvider(() -> plugin.getConfig().getString("locale.lang", "en"))
                 .log(log)
