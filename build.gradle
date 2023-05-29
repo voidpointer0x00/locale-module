@@ -1,5 +1,6 @@
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     group = 'voidpointer.locale'
     version = '1.0.0'
@@ -29,5 +30,37 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok:1.18.26'
         compileOnly 'org.projectlombok:lombok:1.18.26'
         testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                pom {
+                    name = project.getGroup() + ':' + project.getName()
+                    description = 'A locale module for Paper plugins using provided Adventure library'
+                    url = 'https://github.com/voidpointer0x00/locale-module'
+
+                    licenses {
+                        license {
+                            name = 'Do What The Fuck You Want To Public License, Version 2'
+                            url = 'http://www.wtfpl.net/'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'voidpointer'
+                            name = 'Vasiliy'
+                            email = 'voidpointer@ya.ru'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/voidpointer0x00/locale-module.git'
+                        developerConnection = 'scm:git@github.com:voidpointer0x00/locale-module.git'
+                        url = 'https://github.com/voidpointer0x00/locale-module'
+                    }
+                }
+            }
+        }
     }
 }

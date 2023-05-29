@@ -1,5 +1,4 @@
 plugins {
-    id 'maven-publish'
 }
 
 dependencies {
@@ -17,12 +16,4 @@ dependencies {
 
 java {
     withSourcesJar()
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-    }
 }
