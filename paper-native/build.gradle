@@ -1,3 +1,10 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'maven-publish'
+}
+
+project.version '1.0.0-preview'
+
 dependencies {
     implementation project(':api')
     implementation project(':bukkit')
@@ -16,4 +23,22 @@ dependencies {
     //noinspection VulnerableLibrariesLocal
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
     testImplementation "org.mockito:mockito-core:3.+"
+}
+
+/* produce sources jar alongside bytecode */
+java {
+    withSourcesJar()
+}
+
+/* produce sources and compiled jar with dependencies  */
+artifacts {
+    archives sourcesJar
+    archives shadowJar
+}
+
+/* exclude from jar anything that is not related to the library */
+shadowJar {
+    dependencies {
+        exclude(dependency('org.jetbrains:annotations'))
+    }
 }
