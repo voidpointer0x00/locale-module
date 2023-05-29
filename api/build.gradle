@@ -27,3 +27,11 @@ shadowJar {
         exclude(dependency('org.jetbrains:annotations'))
     }
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
