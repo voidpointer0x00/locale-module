@@ -52,8 +52,8 @@ public class LegacyBukkitLocaleIntegrationTest {
 
     @Test
     void testUnknownKey() {
-        Assert.assertTrue(locale.load());
-        assertEquals(locale.get(key).literal(), key.defaultValue());
+        Assert.assertTrue(locale.storage().load());
+        assertEquals(locale.get(key).literal(), key.defaultTranslation());
         locale.send(key, playerMock);
         assertEquals(playerMock.nextMessage(), keyTranslated);
         locale.get(key).send(playerMock);
@@ -63,13 +63,13 @@ public class LegacyBukkitLocaleIntegrationTest {
     @Test(dependsOnMethods = "testUnknownKey")
     void testSavesAndLoadsDefaultKey() {
         assertFalse(localeFile.exists()); /* there is no default file for this plugin */
-        locale.addDefault(keyDefault);
-        assertTrue(locale.save());
+        locale.storage().addDefault(keyDefault);
+        assertTrue(locale.storage().save());
         assertTrue(localeFile.exists());
-        assertTrue(locale.load());
+        assertTrue(locale.storage().load());
         var localeConfig = YamlConfiguration.loadConfiguration(localeFile);
-        assertEquals(localeConfig.get(key.path()), keyDefault.defaultValue());
-        assertEquals(locale.get(key).literal(), keyDefault.defaultValue());
+        assertEquals(localeConfig.get(key.path()), keyDefault.defaultTranslation());
+        assertEquals(locale.get(key).literal(), keyDefault.defaultTranslation());
         locale.send(key, playerMock);
         assertEquals(playerMock.nextMessage(), keyDefaultTranslated);
         locale.get(key).send(playerMock);
@@ -84,7 +84,7 @@ public class LegacyBukkitLocaleIntegrationTest {
         assertNotEquals(locale.get(key).literal(), keyCustomValue);
         locale.send(key, playerMock);
         assertNotEquals(playerMock.nextMessage(), keyCustomTranslated);
-        assertTrue(locale.load());
+        assertTrue(locale.storage().load());
         assertEquals(locale.get(key).literal(), keyCustomValue);
         locale.send(key, playerMock);
         assertEquals(playerMock.nextMessage(), keyCustomTranslated);

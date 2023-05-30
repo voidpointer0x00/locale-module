@@ -11,7 +11,7 @@ package voidpointer.locale.bukkit.storage.yaml;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
-import voidpointer.locale.bukkit.storage.LocaleStorage;
+import voidpointer.locale.api.LocaleStorage;
 
 import java.util.Arrays;
 import java.util.Collection;

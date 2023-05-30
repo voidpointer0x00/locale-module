@@ -16,8 +16,4 @@ import voidpointer.locale.api.PlaceholderFactory;
 public interface BukkitLocale extends Locale<CommandSender> {
     @Override
     @NotNull PlaceholderFactory<CommandSender> placeholders();
-
-    boolean load();
-
-    boolean save();
 }

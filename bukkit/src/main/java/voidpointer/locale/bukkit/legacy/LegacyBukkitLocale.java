@@ -12,11 +12,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import voidpointer.locale.api.LocaleKey;
+import voidpointer.locale.api.LocaleStorage;
 import voidpointer.locale.api.Log;
 import voidpointer.locale.api.Placeholder;
 import voidpointer.locale.bukkit.AbstractBukkitLocale;
 import voidpointer.locale.bukkit.BukkitLogger;
-import voidpointer.locale.bukkit.storage.LocaleStorage;
 import voidpointer.locale.bukkit.storage.yaml.TranslatableYamlYamlLocaleFile;
 import voidpointer.locale.bukkit.storage.yaml.YamlLocaleStorage;
 

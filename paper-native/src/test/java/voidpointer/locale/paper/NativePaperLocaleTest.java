@@ -59,7 +59,7 @@ public class NativePaperLocaleTest {
 
     @Test
     public void testLoad() {
-        assertTrue(locale.load());
+        assertTrue(locale.storage().load());
     }
 
     @DataProvider

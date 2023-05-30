@@ -27,22 +27,5 @@ public interface Locale<T> {
 
     @NotNull Message<T> raw(@NotNull LocaleKey key, @NotNull Placeholder... placeholders);
 
-    void addDefault(@NotNull final LocaleKey key);
-
-    void addDefaults(@NotNull final LocaleKey... keys);
-
-    void addDefaults(@NotNull final Collection<LocaleKey> keys);
-
-    /** @return immutable copy of default keys cache. */
-    @NotNull Collection<LocaleKey> defaults();
-
-    /**
-     *  Will remove the given key from default keys cache.
-     */
-    void removeDefault(@NotNull final LocaleKey key);
-
-    /**
-     *  Will remove the given keys from default keys cache.
-     */
-    void removeDefaults(@NotNull final Collection<LocaleKey> keys);
+    @NotNull LocaleStorage storage();
 }

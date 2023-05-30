@@ -6,10 +6,9 @@
  * http://www.wtfpl.net/ for more details.
  */
 
-package voidpointer.locale.bukkit.storage;
+package voidpointer.locale.api;
 
 import org.jetbrains.annotations.NotNull;
-import voidpointer.locale.api.LocaleKey;
 
 import java.util.Collection;
 
