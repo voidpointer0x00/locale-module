@@ -64,7 +64,7 @@ public class LegacyBukkitLocaleIntegrationTest {
     void testSavesAndLoadsDefaultKey() {
         assertFalse(localeFile.exists()); /* there is no default file for this plugin */
         locale.storage().addDefault(keyDefault);
-        assertTrue(locale.storage().save());
+        assertTrue(locale.storage().saveWithDefaults());
         assertTrue(localeFile.exists());
         assertTrue(locale.storage().load());
         var localeConfig = YamlConfiguration.loadConfiguration(localeFile);

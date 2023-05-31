@@ -38,7 +38,7 @@ public class YamlLocaleStorage extends ConfigurationSectionYamlStorage {
         return true;
     }
 
-    @Override public final boolean save() {
+    @Override public final boolean saveWithDefaults() {
         applyDefaultKeysCache();
         return yamlLocaleFile.save();
     }

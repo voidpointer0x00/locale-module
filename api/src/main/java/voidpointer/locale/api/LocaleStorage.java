@@ -89,5 +89,5 @@ public interface LocaleStorage {
      * @return {@code true} if the storage was successfully saved or {@code false}
      *          if any errors occurred in the process.
      */
-    boolean save();
+    boolean saveWithDefaults();
 }
