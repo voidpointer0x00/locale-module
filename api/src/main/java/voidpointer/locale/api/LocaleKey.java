@@ -10,9 +10,20 @@ package voidpointer.locale.api;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  Essentially a message identifier. Provides a {@link #path()} as a key
+ * to identify a certain requested message within a locale.
+ */
 public interface LocaleKey {
+    /**
+     * @return a universal path to translation of a message associated with this key.
+     */
     @NotNull String path();
 
+    /**
+     * @return the default translation of a message associated with this key if a {@link Locale}
+     *          does not provide any.
+     */
     @NotNull String defaultTranslation();
 
     static @NotNull String fromScreamingSnakeToKebab(@NotNull final String str) {
