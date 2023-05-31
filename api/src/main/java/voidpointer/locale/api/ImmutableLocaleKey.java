@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public record ImmutableLocaleKey(@NotNull String path, @NotNull String defaultValue) implements LocaleKey {
+public record ImmutableLocaleKey(@NotNull String path, @NotNull String defaultTranslation) implements LocaleKey {
     @Override public boolean equals(final Object o) {
         if (this == o)
             return true;

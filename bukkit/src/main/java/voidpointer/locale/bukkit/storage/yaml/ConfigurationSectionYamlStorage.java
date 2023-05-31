@@ -48,7 +48,7 @@ public abstract class ConfigurationSectionYamlStorage implements LocaleStorage {
     }
 
     protected final void applyDefaultKeysCache() {
-        defaultKeysCache.forEach(key -> localeSection.addDefault(key.path(), key.defaultValue()));
+        defaultKeysCache.forEach(key -> localeSection.addDefault(key.path(), key.defaultTranslation()));
     }
 
     protected final void cacheDefault(@NotNull LocaleKey key) {

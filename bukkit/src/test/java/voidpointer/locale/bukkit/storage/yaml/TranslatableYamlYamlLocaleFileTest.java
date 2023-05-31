@@ -113,10 +113,10 @@ public class TranslatableYamlYamlLocaleFileTest {
     @Test(dependsOnMethods = "loadNonempty")
     public void saveAddToEmpty() {
         assertFalse(emptyLocaleFile.config().contains(localeKey.path()));
-        emptyLocaleFile.config().set(localeKey.path(), localeKey.defaultValue());
+        emptyLocaleFile.config().set(localeKey.path(), localeKey.defaultTranslation());
         assertTrue(emptyLocaleFile.config().contains(localeKey.path()));
         assertTrue(emptyLocaleFile.save());
         assertTrue(emptyLocaleFile.config().contains(localeKey.path()));
-        assertEquals(localeKey.defaultValue(), emptyLocaleFile.config().getString(localeKey.path()));
+        assertEquals(localeKey.defaultTranslation(), emptyLocaleFile.config().getString(localeKey.path()));
     }
 }

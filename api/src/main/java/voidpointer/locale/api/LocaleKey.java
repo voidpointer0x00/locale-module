@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public interface LocaleKey {
     @NotNull String path();
 
-    @NotNull String defaultValue();
+    @NotNull String defaultTranslation();
 
     static @NotNull String fromScreamingSnakeToKebab(@NotNull final String str) {
         return str.toLowerCase().replace('_', '-');
