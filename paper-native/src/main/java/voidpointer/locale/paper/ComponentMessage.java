@@ -74,13 +74,6 @@ public record ComponentMessage(Component component) implements Message<CommandSe
     }
 
     @Override
-    public @NotNull ComponentMessage send(@NotNull CommandSender... audiences) {
-        for (var audience : audiences)
-            audience.sendMessage(component);
-        return this;
-    }
-
-    @Override
     public @NotNull ComponentMessage send(@NotNull Collection<? extends CommandSender> audiences) {
         for (var audience : audiences)
             audience.sendMessage(component);

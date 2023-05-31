@@ -32,13 +32,6 @@ public class RawLegacyBukkitMessage implements Message<CommandSender> {
     }
 
     @Override
-    public @NotNull Message<CommandSender> send(@NotNull CommandSender... audiences) {
-        for (final CommandSender audience : audiences)
-            audience.sendMessage(message);
-        return this;
-    }
-
-    @Override
     public @NotNull Message<CommandSender> send(@NotNull Collection<? extends CommandSender> audiences) {
         for (final CommandSender audience : audiences)
             audience.sendMessage(message);

@@ -34,7 +34,6 @@ public final class LegacyBukkitMessage extends RawLegacyBukkitMessage implements
         return this;
     }
 
-    @Override
     public @NotNull Message<CommandSender> send(@NotNull CommandSender... audiences) {
         for (final CommandSender receiver : audiences)
             receiver.sendMessage(parsed == null ? parsed = translateAlternateColorCodes('&', message) : parsed);

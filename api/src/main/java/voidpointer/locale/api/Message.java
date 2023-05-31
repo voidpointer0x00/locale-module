@@ -16,8 +16,6 @@ import java.util.Collection;
 public interface Message<T> {
     @NotNull Message<T> send(@Nullable T audience);
 
-    @NotNull Message<T> send(@NotNull T... audience);
-
     @NotNull Message<T> send(@NotNull Collection<? extends T> audience);
 
     @NotNull String literal();
